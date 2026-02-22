@@ -53,13 +53,13 @@ export function Countdown({ targetDate }: CountdownProps) {
     if (!mounted) return null;
 
     return (
-        <div className="grid grid-cols-4 gap-2 md:gap-4 text-center">
+        <div className="grid grid-cols-4 gap-2 md:gap-6 text-center">
             {timeBlocks.map((block) => (
-                <div key={block.label} className="flex flex-col items-center justify-center p-3 md:p-4 bg-white/50 backdrop-blur-sm border border-gold-500/20 rounded-lg shadow-sm">
-                    <span className="text-2xl md:text-3xl font-serif text-crimson mb-1">
+                <div key={block.label} className="flex flex-col items-center justify-center p-2 bg-transparent border-none">
+                    <span className="text-3xl md:text-5xl font-serif text-[#CF2F2A] mb-1">
                         {block.value.toString().padStart(2, "0")}
                     </span>
-                    <span className="text-[10px] md:text-xs uppercase tracking-wider text-primary-900/70 font-sans">
+                    <span className="text-[9px] md:text-xs uppercase tracking-[0.2em] text-[#E79300] font-sans font-bold">
                         {block.label}
                     </span>
                 </div>

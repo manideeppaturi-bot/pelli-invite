@@ -1,50 +1,111 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
 
 export function Story() {
-    return (
-        <section className="w-full py-24 px-4 bg-sand text-foreground relative overflow-hidden">
-            <div className="max-w-5xl mx-auto text-center">
-                <h2 className="text-4xl md:text-5xl font-serif text-crimson mb-4">Our Story</h2>
-                <div className="w-24 h-[1px] bg-gold-500 mx-auto mb-16" />
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"],
+    });
 
-                <div className="grid md:grid-cols-2 gap-12 items-center text-left">
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
+    // Deep Parallax specifically for the Story image
+    const imageY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+    const textY = useTransform(scrollYProgress, [0, 1], ["10%", "-10%"]);
+
+    return (
+        <section ref={containerRef} className="w-full py-32 px-4 bg-[#FDF9D2] text-[#696B36] relative overflow-hidden">
+
+            {/* Saree Border Top */}
+            <div className="absolute top-0 left-0 w-full h-6 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_10px,#CF2F2A_10px,#CF2F2A_20px)] shadow-md z-20 opacity-90" />
+            <div className="absolute top-6 left-0 w-full h-2 bg-gradient-to-r from-[#CF2F2A] via-[#E79300] to-[#CF2F2A] z-20" />
+
+            {/* Subtle Background Art / Texture */}
+            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/floral-motif.png')] pointer-events-none z-0" />
+
+            {/* Decorative Corner Mandalas */}
+            <div className="absolute top-16 left-4 w-32 h-32 md:w-64 md:h-64 border-[1px] border-[#E79300]/30 rounded-full opacity-50 pointer-events-none -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute top-16 right-4 w-32 h-32 md:w-64 md:h-64 border-[1px] border-[#E79300]/30 rounded-full opacity-50 pointer-events-none translate-x-1/2 -translate-y-1/2" />
+
+
+            <div className="max-w-5xl mx-auto relative z-10 pt-12">
+                <div className="text-center mb-24">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="space-y-6"
+                        className="text-5xl md:text-7xl font-serif text-[#CF2F2A] tracking-wider mb-8 drop-shadow-sm"
                     >
-                        <h3 className="text-3xl font-serif text-primary-900 leading-tight">
-                            Two paths <br /> <span className="italic text-gold-500">beautifully aligned.</span>
+                        Our Story
+                    </motion.h2>
+                    <motion.div
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.2 }}
+                        className="w-32 h-[2px] bg-[#E79300] mx-auto origin-center"
+                    />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-center text-left">
+
+                    <motion.div
+                        style={{ y: textY }}
+                        className="space-y-8 order-2 md:order-1 relative z-20"
+                    >
+                        <h3 className="text-4xl md:text-5xl font-serif text-[#CF2F2A] leading-tight">
+                            Two paths <br /> <span className="italic text-[#E79300] font-serif pr-4">beautifully</span> aligned.
                         </h3>
-                        <p className="font-sans text-foreground/80 leading-relaxed">
+                        <p className="font-sans text-[#696B36]/90 leading-relaxed text-lg tracking-wide">
                             We started as two strangers with a shared heritage and different dreams. A casual meeting turned into endless conversations, and soon enough, we realized that we had found something incredibly special.
                         </p>
-                        <p className="font-sans text-foreground/80 leading-relaxed">
+                        <p className="font-sans text-[#696B36]/90 leading-relaxed text-lg tracking-wide">
                             Surrounded by our wonderful families and friends, we are taking the next step in our journey together. We cannot wait to celebrate our love and heritage with all of you.
                         </p>
                     </motion.div>
 
-                    {/* Placeholder for a beautiful portrait photo */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="relative w-full aspect-[4/5] rounded-t-full border-4 border-gold-400 overflow-hidden shadow-xl"
-                    >
-                        <div className="absolute inset-0 bg-primary-800/10 flex items-center justify-center">
-                            <span className="text-gold-500 font-serif italic text-xl">Love</span>
+                    <div className="relative order-1 md:order-2 flex justify-center">
+                        {/* The Cathedral Arch Image Container with Parallax inner image */}
+                        <div className="relative w-full max-w-[400px] aspect-[3/4] rounded-t-full border-[8px] border-[#45A086] overflow-hidden shadow-2xl bg-[#E6D3FF]/20 group z-10">
+                            <motion.div
+                                style={{ y: imageY }}
+                                className="absolute inset-0 w-full h-[140%] -top-[20%]"
+                            >
+                                {/* Inner image container that moves with scroll */}
+                                <div className="relative w-full h-full flex items-center justify-center">
+                                    <span className="text-[#E79300] font-serif italic text-3xl drop-shadow-sm opacity-80 z-0">
+                                        A beautiful journey
+                                    </span>
+                                    {/* Note for User: Add your actual photo here and remove the text above */}
+                                    {/* <Image src="/couple-photo.jpg" fill alt="Manideep and Supriya" className="object-cover" /> */}
+                                </div>
+                            </motion.div>
+
+                            {/* Overlay gradient for premium feel */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#FDF9D2]/40 to-transparent pointer-events-none" />
                         </div>
-                        {/* Note for User: Add your actual photo here */}
-                        {/* <Image src="/couple-photo.jpg" fill alt="Manideep and Supriya" className="object-cover" /> */}
-                    </motion.div>
+
+                        {/* Decorative Elements around the Arch */}
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+                            className="absolute -top-12 -right-12 w-32 h-32 border-dashed border-2 border-[#E79300]/50 rounded-full z-0 pointer-events-none"
+                        />
+                        <motion.div
+                            animate={{ rotate: -360 }}
+                            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                            className="absolute -bottom-8 -left-8 w-24 h-24 border-dotted border-[3px] border-[#CF2F2A]/40 rounded-full z-0 pointer-events-none"
+                        />
+                    </div>
                 </div>
             </div>
+
+            {/* Saree Border Bottom */}
+            <div className="absolute bottom-6 left-0 w-full h-2 bg-gradient-to-r from-[#CF2F2A] via-[#E79300] to-[#CF2F2A] z-20" />
+            <div className="absolute bottom-0 left-0 w-full h-6 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_10px,#45A086_10px,#45A086_20px)] shadow-md z-20 opacity-90" />
         </section>
     );
 }

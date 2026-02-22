@@ -1,60 +1,142 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Countdown } from "./Countdown";
 
+const generateLanterns = (count: number) => {
+    return Array.from({ length: count }).map((_, i) => ({
+        id: i,
+        left: `${Math.random() * 90}%`,
+        animationDuration: `${10 + Math.random() * 20}s`,
+        delay: `${Math.random() * 5}s`,
+        scale: 0.5 + Math.random() * 0.8,
+    }));
+};
+
 export function Hero() {
+    const [lanterns, setLanterns] = useState<{ id: number; left: string; animationDuration: string; delay: string; scale: number }[]>([]);
+
+    useEffect(() => {
+        setLanterns(generateLanterns(10));
+    }, []);
+
     return (
-        <section className="relative w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-sand px-4">
-            {/* Subtle decorative background elements */}
-            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                {/* Placeholder for floral or mandala bg pattern */}
-                <div className="absolute top-0 left-0 w-64 h-64 bg-crimson rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
-                <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
-                <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-primary-800 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000" />
-            </div>
+        <div className="relative w-full h-full flex flex-col items-center overflow-hidden bg-[#FDF9D2]">
 
+            {/* Deepest Background Texture */}
+            <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/floral-motif.png')] pointer-events-none z-0" />
+
+            {/* The Gopuram (Full Width Backdrop at the bottom) */}
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="z-10 flex flex-col items-center text-center space-y-6"
+                initial={{ y: 200, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+                className="absolute bottom-0 left-0 w-full z-10 flex justify-center pointer-events-none"
             >
-                <span className="uppercase tracking-[0.2em] text-sm md:text-md text-gold-500 font-semibold">
-                    We are getting married
-                </span>
-
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-crimson leading-tight py-4">
-                    Manideep <br className="md:hidden" />
-                    <span className="text-3xl md:text-5xl italic text-gold-500">&amp;</span> <br className="md:hidden" />
-                    Supriya
-                </h1>
-
-                <p className="text-lg md:text-xl font-sans text-foreground/80 max-w-lg mt-4">
-                    Join us as we celebrate our love and begin our new journey together.
-                </p>
-
-                <div className="mt-8 flex flex-col items-center gap-2">
-                    <p className="font-serif text-xl text-primary-900 border-y border-gold-500/50 py-2 px-8 inline-block">
-                        May 3rd, 2026
-                    </p>
-                </div>
-
-                <div className="mt-12 w-full max-w-md">
-                    <Countdown targetDate="2026-05-03T09:00:00" />
+                <div className="relative w-[200vw] md:w-[120vw] max-w-[1800px] h-[50vh] md:h-[70vh] mix-blend-multiply">
+                    <Image
+                        src="/gopuram.png"
+                        alt="Temple Gopuram"
+                        fill
+                        className="object-cover object-bottom md:object-contain"
+                        priority
+                    />
                 </div>
             </motion.div>
+
+            {/* Floating Lanterns (Mid-Background) */}
+            <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
+                {lanterns.map((lantern) => (
+                    <motion.div
+                        key={lantern.id}
+                        initial={{ y: "110vh", opacity: 0 }}
+                        animate={{ y: "-20vh", opacity: [0, 1, 1, 1, 0] }}
+                        transition={{
+                            duration: parseFloat(lantern.animationDuration),
+                            repeat: Infinity,
+                            delay: parseFloat(lantern.delay),
+                            ease: "linear",
+                        }}
+                        className="absolute"
+                        style={{ left: lantern.left, transform: `scale(${lantern.scale})` }}
+                    >
+                        {/* Elegant South Indian Lamp / Lantern abstract shape */}
+                        <div className="w-10 h-14 rounded-lg bg-gradient-to-b from-orange-300 via-pink-400 to-yellow-200 opacity-80 shadow-[0_0_15px_rgba(255,182,193,0.8)] relative">
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 w-8 h-3 bg-yellow-400/80 rounded-b-full blur-[2px]" />
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+
+            {/* Peeking Gods (Right edge) */}
+            <motion.div
+                initial={{ x: 150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                className="absolute bottom-[20%] right-[-5%] md:right-0 z-20 pointer-events-none mix-blend-multiply"
+            >
+                <div className="relative w-[150px] h-[400px] md:w-[200px] md:h-[600px]">
+                    <Image
+                        src="/gods.png"
+                        alt="Hindu Gods"
+                        fill
+                        className="object-contain object-right"
+                        priority
+                    />
+                </div>
+            </motion.div>
+
+            {/* Main Text (Center Foreground) */}
+            <div className="relative z-30 flex flex-col items-center justify-start pt-[12vh] md:pt-[15vh] w-full pointer-events-none drop-shadow-sm">
+                <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                    className="uppercase tracking-[0.4em] text-xs md:text-sm text-[#CF2F2A] font-sans font-bold mb-4"
+                >
+                    The Wedding Of
+                </motion.span>
+
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
+                    className="text-center w-full px-4"
+                >
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none mix-blend-multiply">
+                        Manideep
+                    </h1>
+                    <p className="text-lg md:text-2xl font-sans text-[#E79300] tracking-[0.6em] uppercase py-2 md:py-4 mix-blend-multiply">
+                        W E D S
+                    </p>
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none mix-blend-multiply">
+                        Supriya
+                    </h1>
+                </motion.div>
+
+                {/* Countdown Positioned so it doesn't overlap faces or text unreadably */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 1 }}
+                    className="pointer-events-auto mt-8 md:mt-12 bg-[#FDF9D2]/90 backdrop-blur-md px-4 py-4 md:px-8 md:py-6 rounded-3xl border border-[#E79300]/30 shadow-xl"
+                >
+                    <Countdown targetDate="2026-05-03T09:00:00" />
+                </motion.div>
+            </div>
 
             {/* Scroll indicator */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.5, duration: 1 }}
-                className="absolute bottom-10 flex flex-col items-center"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center"
             >
-                <p className="text-sm uppercase tracking-widest text-primary-800/60 mb-2">Scroll</p>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-primary-800/60 to-transparent" />
+                <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] font-bold text-[#CF2F2A] mb-2 font-sans opacity-90 mix-blend-multiply">Scroll to enter</p>
+                <div className="w-[1px] h-12 bg-gradient-to-b from-[#CF2F2A] to-transparent animate-pulse" />
             </motion.div>
-        </section>
+        </div>
     );
 }

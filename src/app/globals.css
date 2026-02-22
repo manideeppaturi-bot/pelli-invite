@@ -3,28 +3,25 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary-50: #fdf2f2;
-  --color-primary-100: #fae1e1;
-  --color-primary-500: #d43d3d;
-  --color-primary-800: #8c1919;
-  --color-primary-900: #731717;
-  --color-gold-400: #e5b33e;
-  --color-gold-500: #d4af37;
-  --color-sand: #fbf9f6;
-  --color-crimson: #8c1010;
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-lato);
+  --color-meenaya-teal: #45A086;
+  --color-meenaya-purple: #E6D3FF;
+  --color-meenaya-cream: #FDF9D2;
+  --color-meenaya-maroon: #CF2F2A;
+  --color-meenaya-gold: #E79300;
+  --color-meenaya-text: #696B36;
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-manrope);
 }
 
 :root {
-  --background: #fbf9f6;
-  --foreground: #2d1a1a;
+  --background: #FDF9D2;
+  --foreground: #696B36;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1a0f0f;
-    --foreground: #fbf9f6;
+    --background: #252525;
+    --foreground: #FDF9D2;
   }
 }
 
@@ -36,6 +33,11 @@ body {
   scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif), serif;
 }

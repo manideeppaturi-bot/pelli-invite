@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Lato } from "next/font/google";
+import { Cormorant_Upright, Manrope } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const cormorant = Cormorant_Upright({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const lato = Lato({
-  variable: "--font-lato",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["300", "400", "700", "900"],
 });
 
 export const metadata: Metadata = {
@@ -35,10 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfair.variable} ${lato.variable} antialiased`}
+        className={`${cormorant.variable} ${manrope.variable} antialiased`}
       >
         {children}
       </body>
     </html>
   );
 }
+

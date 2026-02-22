@@ -19,7 +19,6 @@ export function RsvpForm() {
         e.preventDefault();
         setStatus("loading");
 
-        // Check if any event is selected
         if (!formData.attendingHaldi && !formData.attendingWedding && !formData.attendingReception) {
             alert("Please select at least one event you are attending.");
             setStatus("idle");
@@ -48,60 +47,65 @@ export function RsvpForm() {
 
     if (status === "success") {
         return (
-            <div className="w-full py-24 px-4 bg-primary-50">
-                <div className="max-w-xl mx-auto bg-sand p-8 rounded-2xl shadow-lg border border-gold-500/20 text-center">
-                    <h3 className="text-3xl font-serif text-primary-900 mb-4">Thank You!</h3>
-                    <p className="font-sans text-foreground/80">Your RSVP has been confirmed. We can't wait to celebrate with you!</p>
+            <div className="w-full py-24 px-4 bg-[#FDF9D2]">
+                <div className="max-w-xl mx-auto bg-meenaya-purple/10 p-12 rounded-t-[100px] shadow-lg border border-meenaya-gold/20 text-center relative overflow-hidden">
+                    <div className="absolute inset-2 border-[1px] border-meenaya-gold/40 rounded-t-[90px] pointer-events-none" />
+                    <h3 className="text-4xl font-serif text-meenaya-maroon mb-6 mt-8">Thank You!</h3>
+                    <p className="font-sans text-meenaya-text/90 text-lg">Your RSVP has been beautifully received. We can't wait to celebrate with you!</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <section id="rsvp" className="w-full py-24 px-4 bg-primary-50">
-            <div className="max-w-2xl mx-auto">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-serif text-crimson mb-4">RSVP</h2>
-                    <div className="w-24 h-[1px] bg-gold-500 mx-auto mb-6" />
-                    <p className="font-sans text-foreground/80">Kindly let us know if you can make it by April 1st, 2026.</p>
+        <section id="rsvp" className="w-full py-32 px-4 bg-meenaya-teal text-meenaya-cream relative">
+            <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/floral-motif.png')] pointer-events-none" />
+
+            <div className="max-w-3xl mx-auto relative z-10">
+                <div className="text-center mb-16">
+                    <h2 className="text-5xl md:text-6xl font-serif text-meenaya-cream mb-6 tracking-wide">RSVP</h2>
+                    <div className="w-24 h-[1px] bg-meenaya-gold mx-auto mb-6" />
+                    <p className="font-sans text-meenaya-cream/80 text-lg tracking-wider">Kindly let us know if you can make it by April 1st, 2026.</p>
                 </div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-sand p-6 md:p-10 rounded-2xl shadow-xl border border-gold-500/20"
+                    className="bg-[#FDF9D2] p-8 md:p-14 rounded-t-[100px] shadow-2xl border border-meenaya-gold/30 relative overflow-hidden"
                 >
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-4">
+                    <div className="absolute inset-2 border-[1px] border-meenaya-gold/40 rounded-t-[90px] pointer-events-none" />
+
+                    <form onSubmit={handleSubmit} className="space-y-8 mt-6 relative z-10">
+                        <div className="space-y-6">
                             <div>
-                                <label className="block text-sm font-semibold text-primary-900 mb-1">Full Name</label>
+                                <label className="block text-sm font-sans font-bold tracking-widest text-[#696B36] mb-2 uppercase">Full Name</label>
                                 <input
                                     type="text"
                                     required
-                                    className="w-full bg-transparent border border-primary-800/30 rounded-lg px-4 py-3 focus:outline-none focus:border-crimson"
+                                    className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-meenaya-maroon text-[#696B36] font-serif text-xl placeholder:text-[#696B36]/40 transition-colors"
                                     placeholder="e.g. Rahul Sharma"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 />
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-4">
+                            <div className="grid md:grid-cols-2 gap-8">
                                 <div>
-                                    <label className="block text-sm font-semibold text-primary-900 mb-1">Phone / Email</label>
+                                    <label className="block text-sm font-sans font-bold tracking-widest text-[#696B36] mb-2 uppercase">Contact</label>
                                     <input
                                         type="text"
                                         required
-                                        className="w-full bg-transparent border border-primary-800/30 rounded-lg px-4 py-3 focus:outline-none focus:border-crimson"
-                                        placeholder="Contact info"
+                                        className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-meenaya-maroon text-[#696B36] font-serif text-xl placeholder:text-[#696B36]/40 transition-colors"
+                                        placeholder="Phone or Email"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-primary-900 mb-1">Total Guests</label>
+                                    <label className="block text-sm font-sans font-bold tracking-widest text-[#696B36] mb-2 uppercase">Total Guests</label>
                                     <select
-                                        className="w-full bg-transparent border border-primary-800/30 rounded-lg px-4 py-3 focus:outline-none focus:border-crimson appearance-none"
+                                        className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-meenaya-maroon text-[#696B36] font-serif text-xl appearance-none cursor-pointer transition-colors"
                                         value={formData.guests}
                                         onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
                                     >
@@ -115,15 +119,15 @@ export function RsvpForm() {
                             </div>
                         </div>
 
-                        <div className="pt-4 border-t border-primary-800/10">
-                            <label className="block text-sm font-semibold text-primary-900 mb-4">Which events will you attend?</label>
-                            <div className="space-y-3">
+                        <div className="pt-8 mt-8 border-t border-[#696B36]/10">
+                            <label className="block text-sm font-sans font-bold tracking-widest text-[#696B36] mb-6 uppercase text-center">Which events will you attend?</label>
+                            <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-12">
                                 {[
-                                    { id: 'haldi', label: 'Haldi Function', field: 'attendingHaldi' },
-                                    { id: 'wedding', label: 'The Wedding', field: 'attendingWedding' },
-                                    { id: 'reception', label: 'Wedding Reception', field: 'attendingReception' },
+                                    { id: 'haldi', label: 'Haldi', field: 'attendingHaldi' },
+                                    { id: 'wedding', label: 'Wedding', field: 'attendingWedding' },
+                                    { id: 'reception', label: 'Reception', field: 'attendingReception' },
                                 ].map((event) => (
-                                    <label key={event.id} className="flex items-center space-x-3 cursor-pointer group">
+                                    <label key={event.id} className="flex items-center space-x-3 cursor-pointer group justify-center">
                                         <div className="relative flex items-center justify-center">
                                             <input
                                                 type="checkbox"
@@ -131,30 +135,32 @@ export function RsvpForm() {
                                                 onChange={(e) => setFormData({ ...formData, [event.field]: e.target.checked })}
                                                 className="peer sr-only"
                                             />
-                                            <div className="w-5 h-5 border-2 border-primary-800/40 rounded transition-colors peer-checked:bg-crimson peer-checked:border-crimson" />
+                                            <div className="w-6 h-6 border-2 border-[#696B36]/40 rounded-sm transition-all peer-checked:bg-meenaya-maroon peer-checked:border-meenaya-maroon" />
                                             <div className="absolute opacity-0 peer-checked:opacity-100 text-white pointer-events-none">
-                                                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                                 </svg>
                                             </div>
                                         </div>
-                                        <span className="text-foreground/80 group-hover:text-primary-900 transition-colors">{event.label}</span>
+                                        <span className="text-[#696B36] font-serif text-xl group-hover:text-meenaya-maroon transition-colors">{event.label}</span>
                                     </label>
                                 ))}
                             </div>
                         </div>
 
                         {status === "error" && (
-                            <p className="text-red-500 text-sm">Something went wrong. Please try again or contact us directly.</p>
+                            <p className="text-meenaya-maroon text-center font-sans text-sm mt-4">Something went wrong. Please try again or contact us directly.</p>
                         )}
 
-                        <button
-                            type="submit"
-                            disabled={status === "loading"}
-                            className="w-full bg-crimson hover:bg-primary-900 text-white font-serif text-lg py-4 rounded-xl transition-all shadow-md disabled:opacity-70 mt-6"
-                        >
-                            {status === "loading" ? "Confirming..." : "Confirm RSVP"}
-                        </button>
+                        <div className="pt-8 text-center">
+                            <button
+                                type="submit"
+                                disabled={status === "loading"}
+                                className="bg-meenaya-maroon hover:bg-[#8C1010] text-[#FDF9D2] font-sans font-bold tracking-widest uppercase text-sm px-12 py-5 rounded-full transition-all shadow-xl disabled:opacity-70"
+                            >
+                                {status === "loading" ? "Confirming..." : "Confirm RSVP"}
+                            </button>
+                        </div>
                     </form>
                 </motion.div>
             </div>
