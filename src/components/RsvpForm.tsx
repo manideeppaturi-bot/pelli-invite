@@ -51,7 +51,7 @@ export function RsvpForm() {
                 <div className="max-w-xl mx-auto bg-meenaya-purple/10 p-12 rounded-t-[100px] shadow-lg border border-meenaya-gold/20 text-center relative overflow-hidden">
                     <div className="absolute inset-2 border-[1px] border-meenaya-gold/40 rounded-t-[90px] pointer-events-none" />
                     <h3 className="text-4xl font-serif text-meenaya-maroon mb-6 mt-8">Thank You!</h3>
-                    <p className="font-sans text-meenaya-text/90 text-lg">Your RSVP has been beautifully received. We can't wait to celebrate with you!</p>
+                    <p className="font-sans text-meenaya-text/90 text-lg">Your RSVP has been beautifully received. We can&apos;t wait to celebrate with you!</p>
                 </div>
             </div>
         );

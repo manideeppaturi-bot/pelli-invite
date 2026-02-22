@@ -47,7 +47,12 @@ export function Countdown({ targetDate }: CountdownProps) {
     // Prevent hydration mismatch by initially rendering without the real values
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
-        setMounted(true);
+        let isMounted = true;
+        if (isMounted) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+            setMounted(true);
+        }
+        return () => { isMounted = false; };
     }, []);
 
     if (!mounted) return null;

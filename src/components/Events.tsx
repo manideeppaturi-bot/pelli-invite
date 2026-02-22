@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { MapPin, Calendar, Clock } from "lucide-react";
 
 const events = [
     {
@@ -124,7 +123,7 @@ export function Events() {
                                 </div>
 
                                 <p className="text-[#696B36]/90 font-sans italic text-base leading-relaxed mt-8 mb-10 px-4">
-                                    "{event.description}"
+                                    &quot;{event.description}&quot;
                                 </p>
                             </div>
 

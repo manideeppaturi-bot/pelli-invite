@@ -19,7 +19,12 @@ export function Hero() {
     const [lanterns, setLanterns] = useState<{ id: number; left: string; animationDuration: string; delay: string; scale: number }[]>([]);
 
     useEffect(() => {
-        setLanterns(generateLanterns(10));
+        let isMounted = true;
+        if (isMounted) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+            setLanterns(generateLanterns(10));
+        }
+        return () => { isMounted = false; };
     }, []);
 
     return (
