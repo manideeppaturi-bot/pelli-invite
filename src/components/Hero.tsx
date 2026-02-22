@@ -81,18 +81,18 @@ export function Hero() {
                 initial={{ x: 150, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute bottom-[10%] right-[-5%] md:right-0 z-40 pointer-events-none mix-blend-multiply"
+                className="absolute bottom-0 right-0 z-40 pointer-events-none mix-blend-multiply w-[250px] md:w-[400px] h-[60%]" // Fix to strict right and bottom
             >
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="relative w-[250px] h-[600px] md:w-[400px] md:h-[900px]"
+                    className="relative w-full h-full"
                 >
                     <Image
                         src="/gods.png"
                         alt="Hindu Gods"
                         fill
-                        className="object-contain object-bottom md:object-right"
+                        className="object-contain object-right-bottom"
                         priority
                     />
                 </motion.div>

@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 const events = [
     {
@@ -13,12 +14,9 @@ const events = [
         mapLink: "https://maps.google.com/?q=Allentown+PA",
         description: "Join us for a mesmerizing evening of drinks, dancing, and celebration to kick off the wedding weekend.",
         icon: (
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CF2F2A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-2 opacity-90 drop-shadow-sm">
-                <path d="M4 4h16l-8 10v6" />
-                <path d="M8 22h8" />
-                <path d="M10 8h4" />
-                <path d="M12 14v8" />
-            </svg>
+            <div className="relative w-32 h-32 md:w-40 md:h-40 mix-blend-multiply mb-4">
+                <Image src="/cocktail.png" alt="Cocktail Party" fill className="object-contain" />
+            </div>
         )
     },
     {
@@ -30,10 +28,9 @@ const events = [
         mapLink: "https://maps.google.com/?q=Allentown+PA",
         description: "Join us for a morning of colors, joy, and blessings as we celebrate with the traditional Haldi.",
         icon: (
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CF2F2A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-2 opacity-90 drop-shadow-sm">
-                <path d="M12 2v20" />
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <div className="relative w-32 h-32 md:w-40 md:h-40 mix-blend-multiply mb-4">
+                <Image src="/haldi.png" alt="Haldi" fill className="object-contain" />
+            </div>
         )
     },
     {
@@ -45,12 +42,9 @@ const events = [
         mapLink: "https://maps.google.com/?q=Boyertown+PA",
         description: "Witness the sacred union as Manideep and Supriya tie the knot in a traditional South-Indian ceremony.",
         icon: (
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CF2F2A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-2 opacity-90 drop-shadow-sm">
-                <path d="M12 2l3 5h-6z" />
-                <path d="M12 7v15" />
-                <path d="M7 12a5 5 0 0 1 10 0" />
-                <path d="M7 17a5 5 0 0 1 10 0" />
-            </svg>
+            <div className="relative w-32 h-32 md:w-40 md:h-40 mix-blend-multiply mb-4">
+                <Image src="/wedding.png" alt="Wedding" fill className="object-contain" />
+            </div>
         )
     }
 ];
@@ -62,10 +56,13 @@ export function Events() {
         offset: ["start end", "end start"],
     });
 
+    // Smooth scroll progress to fix mobile jittering
+    const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 100, mass: 0.5 });
+
     // Parallax the entire grid container slightly upwards
-    const gridY = useTransform(scrollYProgress, [0, 1], ["10%", "-5%"]);
+    const gridY = useTransform(smoothProgress, [0, 1], ["10%", "-5%"]);
     // Background texture moves at a different speed
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+    const bgY = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
 
     return (
         <section ref={containerRef} className="w-full py-32 px-4 bg-[#E6D3FF] relative overflow-hidden">
