@@ -71,7 +71,7 @@ export function Story() {
                         </h3>
                         <div className="w-16 h-[1px] bg-[#E79300] my-4" />
                         <p className="font-sans text-[#696B36]/90 leading-relaxed text-lg tracking-wide">
-                            We started as two strangers with a shared heritage and different dreams. A casual meeting turned into endless conversations, and soon enough, we realized that we had found something incredibly special.
+                            We started as two strangers with a shared heritage and different dreams. We met in Philly, and a casual meeting turned into endless conversations. Soon enough, we realized that we had found something incredibly special.
                         </p>
                         <p className="font-sans text-[#696B36]/90 leading-relaxed text-lg tracking-wide">
                             Surrounded by our wonderful families and friends, we are taking the next step in our journey together. We cannot wait to celebrate our love and heritage with all of you.

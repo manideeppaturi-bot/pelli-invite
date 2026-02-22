@@ -9,9 +9,9 @@ const events = [
         title: "COCKTAIL PARTY",
         date: "FRIDAY, MAY 1ST 2026",
         time: "8:00 PM ONWARDS",
-        venue: "THE MARRIOTT ALLENTOWN",
-        address: "123 Main St, Allentown, PA",
-        mapLink: "https://maps.google.com/?q=Allentown+PA",
+        venue: "TBD",
+        address: "Location to be announced",
+        mapLink: "",
         description: "Join us for a mesmerizing evening of drinks, dancing, and celebration to kick off the wedding weekend.",
         icon: (
             <div className="relative w-32 h-32 md:w-40 md:h-40 mix-blend-multiply mb-4">
@@ -23,9 +23,9 @@ const events = [
         title: "HALDI",
         date: "SATURDAY, MAY 2ND 2026",
         time: "10:00 AM ONWARDS",
-        venue: "THE MARRIOTT ALLENTOWN",
-        address: "123 Main St, Allentown, PA",
-        mapLink: "https://maps.google.com/?q=Allentown+PA",
+        venue: "HERE",
+        address: "At our residence",
+        mapLink: "",
         description: "Join us for a morning of colors, joy, and blessings as we celebrate with the traditional Haldi.",
         icon: (
             <div className="relative w-32 h-32 md:w-40 md:h-40 mix-blend-multiply mb-4">
