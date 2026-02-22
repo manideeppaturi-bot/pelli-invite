@@ -5,31 +5,53 @@ import { useRef } from "react";
 
 const events = [
     {
+        title: "COCKTAIL PARTY",
+        date: "FRIDAY, MAY 1ST 2026",
+        time: "8:00 PM ONWARDS",
+        venue: "THE MARRIOTT ALLENTOWN",
+        address: "123 Main St, Allentown, PA",
+        mapLink: "https://maps.google.com/?q=Allentown+PA",
+        description: "Join us for a mesmerizing evening of drinks, dancing, and celebration to kick off the wedding weekend.",
+        icon: (
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CF2F2A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-2 opacity-90 drop-shadow-sm">
+                <path d="M4 4h16l-8 10v6" />
+                <path d="M8 22h8" />
+                <path d="M10 8h4" />
+                <path d="M12 14v8" />
+            </svg>
+        )
+    },
+    {
         title: "HALDI",
         date: "SATURDAY, MAY 2ND 2026",
         time: "10:00 AM ONWARDS",
         venue: "THE MARRIOTT ALLENTOWN",
         address: "123 Main St, Allentown, PA",
         mapLink: "https://maps.google.com/?q=Allentown+PA",
-        description: "Join us for a morning of colors, joy, and blessings as we kick off the celebrations with traditional Haldi.",
+        description: "Join us for a morning of colors, joy, and blessings as we celebrate with the traditional Haldi.",
+        icon: (
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CF2F2A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-2 opacity-90 drop-shadow-sm">
+                <path d="M12 2v20" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+        )
     },
     {
-        title: "MUHURTHAM",
+        title: "WEDDING",
         date: "SUNDAY, MAY 3RD 2026",
         time: "9:00 AM – 1:00 PM",
         venue: "GRAND BANQUET HALL",
         address: "456 Wedding Rd, Boyertown, PA",
         mapLink: "https://maps.google.com/?q=Boyertown+PA",
         description: "Witness the sacred union as Manideep and Supriya tie the knot in a traditional South-Indian ceremony.",
-    },
-    {
-        title: "RECEPTION",
-        date: "SUNDAY, MAY 3RD 2026",
-        time: "7:00 PM ONWARDS",
-        venue: "GRAND BANQUET HALL",
-        address: "456 Wedding Rd, Boyertown, PA",
-        mapLink: "https://maps.google.com/?q=Boyertown+PA",
-        description: "An evening of dance, dinner, and celebration to officially welcome the newlyweds.",
+        icon: (
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CF2F2A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-2 opacity-90 drop-shadow-sm">
+                <path d="M12 2l3 5h-6z" />
+                <path d="M12 7v15" />
+                <path d="M7 12a5 5 0 0 1 10 0" />
+                <path d="M7 17a5 5 0 0 1 10 0" />
+            </svg>
+        )
     }
 ];
 
@@ -99,8 +121,8 @@ export function Events() {
                             <div className="absolute inset-5 border-[1px] border-dashed border-[#CF2F2A]/30 rounded-t-[100px] md:rounded-t-[160px] pointer-events-none" />
 
                             <div className="mt-12 flex flex-col items-center space-y-6 relative z-10">
-                                {/* Subtle Bapu Style Bindi/Dot Ornament */}
-                                <div className="w-4 h-4 rounded-full bg-[#CF2F2A] mb-2 shadow-sm" />
+                                {/* Event Specific Infographic Icon */}
+                                {event.icon}
 
                                 <h3 className="text-3xl lg:text-4xl font-serif text-[#CF2F2A] uppercase tracking-[0.2em]">{event.title}</h3>
                                 <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#E79300] to-transparent" />

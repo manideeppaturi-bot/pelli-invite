@@ -123,9 +123,9 @@ export function RsvpForm() {
                             <label className="block text-sm font-sans font-bold tracking-widest text-[#696B36] mb-6 uppercase text-center">Which events will you attend?</label>
                             <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-12">
                                 {[
+                                    { id: 'cocktail', label: 'Cocktail Party', field: 'attendingReception' },
                                     { id: 'haldi', label: 'Haldi', field: 'attendingHaldi' },
                                     { id: 'wedding', label: 'Wedding', field: 'attendingWedding' },
-                                    { id: 'reception', label: 'Reception', field: 'attendingReception' },
                                 ].map((event) => (
                                     <label key={event.id} className="flex items-center space-x-3 cursor-pointer group justify-center">
                                         <div className="relative flex items-center justify-center">

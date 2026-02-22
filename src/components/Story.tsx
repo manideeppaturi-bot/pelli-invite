@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export function Story() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -55,9 +56,19 @@ export function Story() {
                         style={{ y: textY }}
                         className="space-y-8 order-2 md:order-1 relative z-20"
                     >
+                        {/* Cute Lotus Infographic */}
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E79300" strokeWidth="1" className="mb-4 opacity-80" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2c0 0-4 10-10 12 6-2 10-12 10-12z" />
+                            <path d="M12 2c0 0 4 10 10 12-6-2-10-12-10-12z" />
+                            <path d="M12 22c0 0-4-10-10-12 6 2 10 12 10 12z" />
+                            <path d="M12 22c0 0 4-10 10-12-6 2-10 12-10 12z" />
+                            <circle cx="12" cy="12" r="3" fill="#CF2F2A" />
+                        </svg>
+
                         <h3 className="text-4xl md:text-5xl font-serif text-[#CF2F2A] leading-tight">
                             Two paths <br /> <span className="italic text-[#E79300] font-serif pr-4">beautifully</span> aligned.
                         </h3>
+                        <div className="w-16 h-[1px] bg-[#E79300] my-4" />
                         <p className="font-sans text-[#696B36]/90 leading-relaxed text-lg tracking-wide">
                             We started as two strangers with a shared heritage and different dreams. A casual meeting turned into endless conversations, and soon enough, we realized that we had found something incredibly special.
                         </p>
@@ -74,12 +85,14 @@ export function Story() {
                                 className="absolute inset-0 w-full h-[140%] -top-[20%]"
                             >
                                 {/* Inner image container that moves with scroll */}
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                    <span className="text-[#E79300] font-serif italic text-3xl drop-shadow-sm opacity-80 z-0">
-                                        A beautiful journey
-                                    </span>
-                                    {/* Note for User: Add your actual photo here and remove the text above */}
-                                    {/* <Image src="/couple-photo.jpg" fill alt="Manideep and Supriya" className="object-cover" /> */}
+                                <div className="relative w-full h-full">
+                                    <Image
+                                        src="/couple-photo.png"
+                                        alt="Manideep and Supriya"
+                                        fill
+                                        className="object-cover grayscale-[20%] sepia-[10%] drop-shadow-md"
+                                        priority
+                                    />
                                 </div>
                             </motion.div>
 

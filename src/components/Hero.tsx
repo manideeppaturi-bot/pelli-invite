@@ -9,14 +9,15 @@ const generateLanterns = (count: number) => {
     return Array.from({ length: count }).map((_, i) => ({
         id: i,
         left: `${Math.random() * 90}%`,
+        startY: `${Math.random() * 100}vh`, // Start randomly within the screen
         animationDuration: `${10 + Math.random() * 20}s`,
-        delay: `${Math.random() * 5}s`,
+        delay: `0s`, // No delay, start immediately
         scale: 0.5 + Math.random() * 0.8,
     }));
 };
 
 export function Hero() {
-    const [lanterns, setLanterns] = useState<{ id: number; left: string; animationDuration: string; delay: string; scale: number }[]>([]);
+    const [lanterns, setLanterns] = useState<{ id: number; left: string; startY: string; animationDuration: string; delay: string; scale: number }[]>([]);
 
     useEffect(() => {
         let isMounted = true;
@@ -53,15 +54,15 @@ export function Hero() {
 
             {/* Floating Lanterns (Mid-Background) */}
             <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
-                {lanterns.map((lantern) => (
+                {lanterns.map((lantern: any) => (
                     <motion.div
                         key={lantern.id}
-                        initial={{ y: "110vh", opacity: 0 }}
+                        initial={{ y: lantern.startY, opacity: 0 }}
                         animate={{ y: "-20vh", opacity: [0, 1, 1, 1, 0] }}
                         transition={{
                             duration: parseFloat(lantern.animationDuration),
                             repeat: Infinity,
-                            delay: parseFloat(lantern.delay),
+                            delay: 0,
                             ease: "linear",
                         }}
                         className="absolute"
@@ -75,22 +76,26 @@ export function Hero() {
                 ))}
             </div>
 
-            {/* Peeking Gods (Right edge) */}
+            {/* Peeking Gods (Right edge - Enlarged and Animated) */}
             <motion.div
                 initial={{ x: 150, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute bottom-[20%] right-[-5%] md:right-0 z-20 pointer-events-none mix-blend-multiply"
+                className="absolute bottom-[10%] right-[-5%] md:right-0 z-40 pointer-events-none mix-blend-multiply"
             >
-                <div className="relative w-[150px] h-[400px] md:w-[200px] md:h-[600px]">
+                <motion.div
+                    animate={{ y: [0, -15, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative w-[250px] h-[600px] md:w-[400px] md:h-[900px]"
+                >
                     <Image
                         src="/gods.png"
                         alt="Hindu Gods"
                         fill
-                        className="object-contain object-right"
+                        className="object-contain object-bottom md:object-right"
                         priority
                     />
-                </div>
+                </motion.div>
             </motion.div>
 
             {/* Main Text (Center Foreground) */}
@@ -113,9 +118,9 @@ export function Hero() {
                     <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none mix-blend-multiply">
                         Manideep
                     </h1>
-                    <p className="text-lg md:text-2xl font-sans text-[#E79300] tracking-[0.6em] uppercase py-2 md:py-4 mix-blend-multiply">
-                        W E D S
-                    </p>
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase leading-none mix-blend-multiply py-2 md:py-4">
+                        &
+                    </h1>
                     <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none mix-blend-multiply">
                         Supriya
                     </h1>
