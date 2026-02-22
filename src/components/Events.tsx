@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
@@ -56,13 +56,10 @@ export function Events() {
         offset: ["start end", "end start"],
     });
 
-    // Smooth scroll progress to fix mobile jittering
-    const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 100, mass: 0.5 });
-
     // Parallax the entire grid container slightly upwards
-    const gridY = useTransform(smoothProgress, [0, 1], ["10%", "-5%"]);
+    const gridY = useTransform(scrollYProgress, [0, 1], ["10%", "-5%"]);
     // Background texture moves at a different speed
-    const bgY = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
     return (
         <section ref={containerRef} className="w-full py-32 px-4 bg-[#E6D3FF] relative overflow-hidden">

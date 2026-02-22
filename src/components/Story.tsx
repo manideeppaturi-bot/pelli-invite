@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
@@ -11,12 +11,10 @@ export function Story() {
         offset: ["start end", "end start"], // Begins when top of element hits bottom of viewport
     });
 
-    const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 100, mass: 0.5 });
-
-    // Slower, subtle parallax movements for premium feel
-    const textY = useTransform(smoothProgress, [0, 1], ["10%", "-10%"]);
+    // Slower, subtle parallax movements for premium feel without spring jitter under Lenis
+    const textY = useTransform(scrollYProgress, [0, 1], ["10%", "-10%"]);
     // Deep Parallax specifically for the Story image
-    const imageY = useTransform(smoothProgress, [0, 1], ["-20%", "20%"]);
+    const imageY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
     return (
         <section ref={containerRef} className="w-full py-32 px-4 bg-[#FDF9D2] text-[#696B36] relative overflow-hidden">

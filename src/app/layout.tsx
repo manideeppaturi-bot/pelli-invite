@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Upright, Manrope } from "next/font/google";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const cormorant = Cormorant_Upright({
@@ -37,7 +38,7 @@ export default function RootLayout({
       <body
         className={`${cormorant.variable} ${manrope.variable} antialiased`}
       >
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
