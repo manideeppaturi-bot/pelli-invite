@@ -67,7 +67,7 @@ export function Story() {
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, margin: "200px" }}
                         transition={{ duration: 0.8 }}
                         className="text-5xl md:text-7xl font-serif text-[#CF2F2A] tracking-wider mb-8 drop-shadow-sm"
                     >
@@ -76,7 +76,7 @@ export function Story() {
                     <motion.div
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, margin: "200px" }}
                         transition={{ duration: 1, delay: 0.2 }}
                         className="w-32 h-[2px] bg-[#E79300] mx-auto origin-center"
                     />
@@ -111,7 +111,10 @@ export function Story() {
 
                     <div className="relative order-1 md:order-2 flex justify-center">
                         {/* The Cathedral Arch Image Container with Parallax inner image */}
-                        <div className="relative w-full max-w-[400px] aspect-[3/4] rounded-t-full border-[8px] border-[#45A086] overflow-hidden shadow-2xl bg-[#E6D3FF]/20 group z-10">
+                        <div
+                            className="relative w-full max-w-[400px] aspect-[3/4] rounded-t-full border-[8px] border-[#45A086] overflow-hidden shadow-2xl bg-[#E6D3FF]/20 group z-10"
+                            style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+                        >
                             <motion.div
                                 style={{ y: imageY }}
                                 className={`absolute inset-0 w-full ${isMobile ? 'h-full top-0' : 'h-[140%] -top-[20%]'}`}

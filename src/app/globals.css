@@ -44,10 +44,6 @@ h6 {
 
 /* Mobile performance: skip rendering off-screen sections */
 @media (max-width: 768px) {
-  section {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 800px;
-  }
 
   /* GPU-accelerate animated elements on mobile */
   .will-change-transform {

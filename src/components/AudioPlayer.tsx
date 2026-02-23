@@ -8,13 +8,9 @@ export function AudioPlayer() {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [hasEntered, setHasEntered] = useState(false);
-    const [audioSrc, setAudioSrc] = useState("");
 
-    // Randomize BGM on client only to avoid SSR hydration mismatch
-    useEffect(() => {
-        const songs = ["/dude_bgm.mp3", "/jashn_e_bahara_bgm.mp3", "/varsham_bgm.mp3"];
-        setAudioSrc(songs[Math.floor(Math.random() * songs.length)]);
-    }, []);
+    // Always play dude_bgm.mp3 to ensure reliable mobile playback and SSR preloading
+    const audioSrc = "/dude_bgm.mp3";
 
     useEffect(() => {
         const audio = audioRef.current;

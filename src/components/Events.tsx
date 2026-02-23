@@ -90,7 +90,7 @@ function EventCard({ event, index }: { event: EventItem, index: number }) {
         <motion.div
             initial={{ opacity: 0, y: isMobile ? 40 : 100 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true, margin: "200px" }}
             transition={{ duration: isMobile ? 0.5 : 0.8, delay: index * 0.15, ease: "easeOut" }}
             {...(!isMobile && { whileHover: { y: -10, transition: { duration: 0.3 } } })}
             className="bg-[#FDF9D2] rounded-t-[120px] md:rounded-t-[180px] p-8 md:p-12 shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-[#E79300]/30 flex flex-col items-center text-center relative overflow-hidden group w-full will-change-transform"
