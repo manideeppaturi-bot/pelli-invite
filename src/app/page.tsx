@@ -3,6 +3,7 @@ import { IntroVideo } from "@/components/IntroVideo";
 import { Events } from "@/components/Events";
 import { Story } from "@/components/Story";
 import { RsvpForm } from "@/components/RsvpForm";
+import { OutroVideo } from "@/components/OutroVideo";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
         <Story />
         <Events />
         <RsvpForm />
+        <OutroVideo />
       </div>
     </main>
   );
