@@ -24,6 +24,28 @@ export function Story() {
             <div className="absolute top-0 left-0 w-full h-6 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_10px,#CF2F2A_10px,#CF2F2A_20px)] shadow-md z-20 opacity-90" />
             <div className="absolute top-6 left-0 w-full h-2 bg-gradient-to-r from-[#CF2F2A] via-[#E79300] to-[#CF2F2A] z-20" />
 
+            {/* Peeking Couple (Left edge - Animated) */}
+            <motion.div
+                initial={{ x: -150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                className="absolute top-1/4 left-0 z-30 pointer-events-none mix-blend-multiply w-[140px] sm:w-[180px] md:w-[250px] lg:w-[300px] h-[30%] sm:h-[40%] md:h-[50%]"
+            >
+                <motion.div
+                    animate={{ y: [0, -15, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative w-full h-full"
+                >
+                    <Image
+                        src="/couple_icon.png"
+                        alt="Mani & Supriya"
+                        fill
+                        className="object-contain object-left-bottom"
+                        priority
+                    />
+                </motion.div>
+            </motion.div>
+
             <FloatingParticles count={6} />
 
             {/* Subtle Background Art / Texture */}

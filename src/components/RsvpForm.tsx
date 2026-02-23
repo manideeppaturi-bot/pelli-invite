@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { FloatingParticles } from "./FloatingParticles";
 
@@ -16,6 +16,59 @@ export function RsvpForm() {
     });
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
+    const [totalGuests, setTotalGuests] = useState(15);
+    const [sessionId, setSessionId] = useState<string | null>(null);
+    const [welcomeName, setWelcomeName] = useState("");
+
+    // Load total guests and local session on mount
+    useEffect(() => {
+        const fetchGuests = async () => {
+            const { data, error } = await supabase.from("rsvps").select("guests_count");
+            if (data && !error) {
+                const count = data.reduce((sum, row) => sum + (row.guests_count || 0), 0);
+                setTotalGuests(15 + count);
+            }
+        };
+        fetchGuests();
+
+        const sessionRaw = localStorage.getItem("rsvpSession");
+        if (sessionRaw) {
+            try {
+                const session = JSON.parse(sessionRaw);
+                setFormData({
+                    name: session.name || "",
+                    email: session.email || "",
+                    guests: session.guests || "1",
+                    attendingHaldi: session.attendingHaldi || false,
+                    attendingWedding: session.attendingWedding || false,
+                    attendingReception: session.attendingReception || false,
+                });
+                if (session.id) setSessionId(session.id);
+                if (session.name) setWelcomeName(session.name.split(" ")[0]);
+            } catch (e) {
+                console.error("Failed to parse session", e);
+            }
+        }
+    }, []);
+
+    const playDing = () => {
+        try {
+            const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = "sine";
+            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.5);
+        } catch (e) { }
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus("loading");
@@ -27,19 +80,59 @@ export function RsvpForm() {
         }
 
         try {
-            const { error } = await supabase.from("rsvps").insert([
-                {
+            let newId = sessionId;
+            let guestsDelta = 0;
+
+            if (sessionId) {
+                // Determine difference if editing, for visual counter bump
+                const sessionRaw = localStorage.getItem("rsvpSession");
+                const oldGuests = sessionRaw ? JSON.parse(sessionRaw).guests : 0;
+                guestsDelta = parseInt(formData.guests) - parseInt(oldGuests || "0");
+
+                const { error } = await supabase.from("rsvps").update({
                     name: formData.name,
                     email: formData.email,
                     guests_count: parseInt(formData.guests),
                     attending_haldi: formData.attendingHaldi,
                     attending_wedding: formData.attendingWedding,
                     attending_reception: formData.attendingReception,
-                },
-            ]);
+                }).eq("id", sessionId);
 
-            if (error) throw error;
+                if (error) throw error;
+            } else {
+                guestsDelta = parseInt(formData.guests);
+                const { data, error } = await supabase.from("rsvps").insert([
+                    {
+                        name: formData.name,
+                        email: formData.email,
+                        guests_count: parseInt(formData.guests),
+                        attending_haldi: formData.attendingHaldi,
+                        attending_wedding: formData.attendingWedding,
+                        attending_reception: formData.attendingReception,
+                    },
+                ]).select();
+
+                if (error) throw error;
+                if (data && data[0]) {
+                    newId = data[0].id;
+                    setSessionId(data[0].id);
+                }
+            }
+
+            // Save session
+            localStorage.setItem("rsvpSession", JSON.stringify({ ...formData, id: newId }));
+            setWelcomeName(formData.name.split(" ")[0]);
+
+            if (guestsDelta > 0) {
+                playDing();
+                setTotalGuests((prev) => prev + guestsDelta);
+            } else if (guestsDelta < 0) {
+                setTotalGuests((prev) => prev + guestsDelta);
+            }
+
             setStatus("success");
+            // Auto hide success block to show edit state after a bit
+            setTimeout(() => setStatus("idle"), 3000);
         } catch (error) {
             console.error("Error submitting RSVP:", error);
             setStatus("error");
@@ -51,8 +144,13 @@ export function RsvpForm() {
             <div className="w-full py-24 px-4 bg-[#FDF9D2]">
                 <div className="max-w-xl mx-auto bg-meenaya-purple/10 p-12 rounded-t-[100px] shadow-lg border border-meenaya-gold/20 text-center relative overflow-hidden">
                     <div className="absolute inset-2 border-[1px] border-meenaya-gold/40 rounded-t-[90px] pointer-events-none" />
-                    <h3 className="text-4xl font-serif text-meenaya-maroon mb-6 mt-8">Thank You!</h3>
-                    <p className="font-sans text-meenaya-text/90 text-lg">Your RSVP has been beautifully received. We can&apos;t wait to celebrate with you!</p>
+                    <motion.h3
+                        initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring" }}
+                        className="text-4xl font-serif text-[#CF2F2A] mb-6 mt-8"
+                    >
+                        Thank You!
+                    </motion.h3>
+                    <p className="font-sans text-[#696B36]/90 text-lg">Your RSVP has been beautifully received. We can&apos;t wait to celebrate with you!</p>
                 </div>
             </div>
         );
@@ -68,11 +166,32 @@ export function RsvpForm() {
 
             <div className="max-w-3xl mx-auto relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-5xl md:text-6xl font-serif text-[#FDF9D2] mb-6 tracking-wide drop-shadow-sm">RSVP</h2>
+                    <h2 className="text-5xl md:text-6xl font-serif text-[#FDF9D2] mb-6 tracking-wide drop-shadow-sm">
+                        {welcomeName ? `Welcome back ${welcomeName}!` : "RSVP"}
+                    </h2>
                     <div className="w-24 h-[1px] bg-[#E79300] mx-auto mb-6" />
                     <p className="text-center text-[#FDF9D2]/90 pb-6 text-sm font-sans mx-auto max-w-lg leading-relaxed">
-                        We want you and friends and family all to be here! Your guest count and RSVP helps us plan better. We understand as things change this can be updated for better planning.
+                        We want you and your friends/family all to be here! Your guest count and RSVP helps us plan better. We understand things change, so checking back later lets you easily update your response.
                     </p>
+
+                    {/* Guest Counter Odometer */}
+                    <div className="flex flex-col items-center mt-4 space-y-2">
+                        <p className="font-sans text-[#FDF9D2]/70 uppercase tracking-widest text-xs">Current Guest Count</p>
+                        <div className="overflow-hidden flex items-center justify-center text-5xl font-serif text-[#E79300] tracking-widest bg-[#FDF9D2]/10 px-8 py-3 rounded-full border border-[#E79300]/30 shadow-[0_0_15px_rgba(231,147,0,0.2)]">
+                            <AnimatePresence mode="popLayout">
+                                <motion.span
+                                    key={totalGuests}
+                                    initial={{ y: -30, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: 30, opacity: 0 }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                    className="inline-block"
+                                >
+                                    {totalGuests}
+                                </motion.span>
+                            </AnimatePresence>
+                        </div>
+                    </div>
                 </div>
 
                 <motion.div
@@ -99,8 +218,8 @@ export function RsvpForm() {
                                 <input
                                     type="text"
                                     required
-                                    className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-meenaya-maroon text-[#696B36] font-serif text-xl placeholder:text-[#696B36]/40 transition-colors"
-                                    placeholder="e.g. Rahul Sharma"
+                                    className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-[#CF2F2A] text-[#696B36] font-serif text-xl placeholder:text-[#696B36]/40 transition-colors"
+                                    placeholder="Your Full Name"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 />
@@ -112,7 +231,7 @@ export function RsvpForm() {
                                     <input
                                         type="text"
                                         required
-                                        className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-meenaya-maroon text-[#696B36] font-serif text-xl placeholder:text-[#696B36]/40 transition-colors"
+                                        className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-[#CF2F2A] text-[#696B36] font-serif text-xl placeholder:text-[#696B36]/40 transition-colors"
                                         placeholder="Phone or Email"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -151,30 +270,30 @@ export function RsvpForm() {
                                                 onChange={(e) => setFormData({ ...formData, [event.field]: e.target.checked })}
                                                 className="peer sr-only"
                                             />
-                                            <div className="w-6 h-6 border-2 border-[#696B36]/40 rounded-sm transition-all peer-checked:bg-meenaya-maroon peer-checked:border-meenaya-maroon" />
+                                            <div className="w-6 h-6 border-2 border-[#696B36]/40 rounded-sm transition-all peer-checked:bg-[#CF2F2A] peer-checked:border-[#CF2F2A]" />
                                             <div className="absolute opacity-0 peer-checked:opacity-100 text-white pointer-events-none">
                                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                                 </svg>
                                             </div>
                                         </div>
-                                        <span className="text-[#696B36] font-serif text-xl group-hover:text-meenaya-maroon transition-colors">{event.label}</span>
+                                        <span className="text-[#696B36] font-serif text-xl group-hover:text-[#CF2F2A] transition-colors">{event.label}</span>
                                     </label>
                                 ))}
                             </div>
                         </div>
 
                         {status === "error" && (
-                            <p className="text-meenaya-maroon text-center font-sans text-sm mt-4">Something went wrong. Please try again or contact us directly.</p>
+                            <p className="text-[#CF2F2A] text-center font-sans text-sm mt-4">Something went wrong. Please try again or contact us directly.</p>
                         )}
 
                         <div className="pt-8 text-center">
                             <button
                                 type="submit"
                                 disabled={status === "loading"}
-                                className="bg-meenaya-maroon hover:bg-[#8C1010] text-[#FDF9D2] font-sans font-bold tracking-widest uppercase text-sm px-12 py-5 rounded-full transition-all shadow-xl disabled:opacity-70"
+                                className="bg-[#CF2F2A] hover:bg-[#8C1010] text-[#FDF9D2] font-sans font-bold tracking-widest uppercase text-sm px-12 py-5 rounded-full transition-all shadow-xl disabled:opacity-70"
                             >
-                                {status === "loading" ? "Confirming..." : "Confirm RSVP"}
+                                {status === "loading" ? "Confirming..." : (sessionId ? "Update RSVP" : "Confirm RSVP")}
                             </button>
                         </div>
                     </form>

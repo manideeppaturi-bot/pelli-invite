@@ -2,11 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export function AudioPlayer() {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [hasEntered, setHasEntered] = useState(false);
+    const [audioSrc, setAudioSrc] = useState("/bgm.mp3");
+
+    useEffect(() => {
+        // Randomize BGM
+        const songs = ["/bgm.mp3", "/song2.mp3", "/song3.mp3", "/song4.mp3", "/song5.mp3"];
+        setAudioSrc(songs[Math.floor(Math.random() * songs.length)]);
+    }, []);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -65,14 +73,15 @@ export function AudioPlayer() {
                             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                             className="text-center z-10 flex flex-col items-center"
                         >
-                            <div className="w-20 h-20 rounded-full border-2 border-[#E79300] flex items-center justify-center mb-8 bg-[#FDF9D2]/10 backdrop-blur-sm shadow-[0_0_30px_rgba(231,147,0,0.3)]">
-                                <svg className="w-8 h-8 text-[#E79300] ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z" />
-                                </svg>
+                            <div className="relative w-64 h-64 md:w-80 md:h-80 mb-6 drop-shadow-2xl">
+                                <Image
+                                    src="/mani_suppu_icon.png"
+                                    alt="Mani & Suppu"
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                />
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-serif text-[#FDF9D2] tracking-widest uppercase mb-6 drop-shadow-lg">
-                                You're Invited
-                            </h1>
                             <p className="font-sans text-[#E79300] tracking-[0.4em] text-xs md:text-sm uppercase drop-shadow-md">
                                 Tap anywhere to open
                             </p>
@@ -83,7 +92,7 @@ export function AudioPlayer() {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <audio ref={audioRef} src="/bgm.mp3" loop />
+            <audio ref={audioRef} src={audioSrc} loop />
         </>
     );
 }

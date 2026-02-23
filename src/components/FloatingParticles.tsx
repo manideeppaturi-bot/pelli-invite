@@ -14,7 +14,7 @@ export function FloatingParticles({ count = 10 }: FloatingParticlesProps) {
         let isMounted = true;
         if (isMounted) {
             const isMobile = window.innerWidth < 768;
-            const finalCount = isMobile ? Math.max(3, Math.floor(count * 0.4)) : count;
+            const finalCount = isMobile ? Math.floor(count * 2) : count;
 
             const generated = Array.from({ length: finalCount }).map((_, i) => {
                 let leftPercent = Math.random() * 100;

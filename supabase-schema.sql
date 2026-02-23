@@ -19,3 +19,6 @@ CREATE POLICY "Allow anonymous inserts" ON rsvps FOR INSERT TO anon WITH CHECK (
 
 -- Allow authenticated users to SELECT (so you can view the RSVPs in your dashboard)
 CREATE POLICY "Allow public select" ON rsvps FOR SELECT TO anon USING (true);
+
+-- Allow anonymous users to UPDATE their own RSVPs
+CREATE POLICY "Allow anonymous update" ON rsvps FOR UPDATE TO anon USING (true);
