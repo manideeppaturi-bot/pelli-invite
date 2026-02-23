@@ -98,7 +98,7 @@ export function AudioPlayer() {
                     </motion.div>
                 )}
             </AnimatePresence>
-            {audioSrc && <audio ref={audioRef} src={audioSrc} loop />}
+            {audioSrc && <audio ref={audioRef} src={audioSrc} loop preload="auto" />}
         </>
     );
 }

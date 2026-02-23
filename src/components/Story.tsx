@@ -114,7 +114,7 @@ export function Story() {
                         <div className="relative w-full max-w-[400px] aspect-[3/4] rounded-t-full border-[8px] border-[#45A086] overflow-hidden shadow-2xl bg-[#E6D3FF]/20 group z-10">
                             <motion.div
                                 style={{ y: imageY }}
-                                className="absolute inset-0 w-full h-[140%] -top-[20%]"
+                                className={`absolute inset-0 w-full ${isMobile ? 'h-full top-0' : 'h-[140%] -top-[20%]'}`}
                             >
                                 {/* Inner image container that moves with scroll */}
                                 <div className="relative w-full h-full">

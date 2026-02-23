@@ -41,3 +41,18 @@ h5,
 h6 {
   font-family: var(--font-serif), serif;
 }
+
+/* Mobile performance: skip rendering off-screen sections */
+@media (max-width: 768px) {
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+  }
+
+  /* GPU-accelerate animated elements on mobile */
+  .will-change-transform {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+}
