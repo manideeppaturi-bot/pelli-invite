@@ -42,8 +42,8 @@ export function Hero() {
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="absolute bottom-0 left-0 w-full z-10 flex justify-center pointer-events-none"
             >
-                {/* Made arch h-[65vh] on mobile so it pierces the wording */}
-                <div className="relative w-[200vw] md:w-[120vw] max-w-[1800px] h-[65vh] md:h-[70vh] mix-blend-multiply">
+                {/* Reverted arch height to user preference */}
+                <div className="relative w-[200vw] md:w-[120vw] max-w-[1800px] h-[50vh] md:h-[70vh] mix-blend-multiply">
                     <Image
                         src="/gopuram.png"
                         alt="Temple Gopuram"
@@ -71,7 +71,7 @@ export function Hero() {
                         style={{ left: lantern.left, transform: `scale(${lantern.scale})` }}
                     >
                         {lantern.type === "red_lantern" && (
-                            <div className="relative w-16 h-20 -ml-8 drop-shadow-[0_8px_16px_rgba(255,0,0,0.5)] opacity-90">
+                            <div className="relative w-14 h-16 -ml-7 drop-shadow-[0_8px_16px_rgba(255,0,0,0.5)] opacity-90">
                                 {/* Red Sky Lantern matching user reference */}
                                 <svg viewBox="0 0 100 120" className="w-full h-full overflow-visible">
                                     {/* Lantern Body (Red Gradient) */}
@@ -137,7 +137,7 @@ export function Hero() {
                 initial={{ x: 150, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute bottom-0 right-0 z-40 pointer-events-none mix-blend-multiply w-[140px] sm:w-[150px] md:w-[350px] lg:w-[400px] h-[40%] sm:h-[45%] md:h-[60%] translate-x-[20%] md:translate-x-0"
+                className="absolute bottom-0 right-0 z-40 pointer-events-none mix-blend-multiply w-[100px] sm:w-[150px] md:w-[350px] lg:w-[400px] h-[35%] sm:h-[45%] md:h-[60%]"
             >
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
