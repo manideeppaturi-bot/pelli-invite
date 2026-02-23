@@ -17,6 +17,7 @@ export function CursorTrail() {
     useEffect(() => {
         let particleId = 0;
         const colors = ["#CF2F2A", "#E79300", "#FDF9D2", "#45A086"];
+        const isMobile = window.innerWidth <= 768;
 
         const handleMouseMove = (e: MouseEvent) => {
             // Only generate particles occasionally to avoid lagging
@@ -48,7 +49,10 @@ export function CursorTrail() {
         };
 
         window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("touchmove", handleTouchMove, { passive: true });
+        // Skip touch trail on mobile — it causes scroll jank from frequent state updates
+        if (!isMobile) {
+            window.addEventListener("touchmove", handleTouchMove, { passive: true });
+        }
 
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
