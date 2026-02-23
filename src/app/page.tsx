@@ -3,7 +3,6 @@ import { IntroVideo } from "@/components/IntroVideo";
 import { Events } from "@/components/Events";
 import { Story } from "@/components/Story";
 import { RsvpForm } from "@/components/RsvpForm";
-import { OutroVideo } from "@/components/OutroVideo";
 
 export default function Home() {
   return (
@@ -21,11 +20,10 @@ export default function Home() {
         {/* Subtle Border Overlay on the rounded arch edge */}
         <div className="absolute top-2 left-0 w-full h-4 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_15px,#CF2F2A_15px,#CF2F2A_30px)] shadow-md z-30 opacity-90" />
 
-        <IntroVideo />
         <Story />
         <Events />
         <RsvpForm />
-        <OutroVideo />
+        <IntroVideo />
       </div>
     </main>
   );
