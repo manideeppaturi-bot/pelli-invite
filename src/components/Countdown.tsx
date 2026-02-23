@@ -60,7 +60,7 @@ export function Countdown({ targetDate }: CountdownProps) {
     return (
         <div className="grid grid-cols-4 gap-3 md:gap-6 text-center">
             {timeBlocks.map((block) => (
-                <div key={block.label} className="flex flex-col items-center justify-center py-3 px-2 md:py-4 md:px-4 bg-white/60 backdrop-blur-md border border-[#E79300]/30 rounded-2xl shadow-sm min-w-[70px] md:min-w-[90px]">
+                <div key={block.label} className="flex flex-col items-center justify-center py-3 px-2 md:py-4 md:px-4 bg-gradient-to-b from-white/80 to-[#FDF9D2]/60 backdrop-blur-md border-2 border-[#E79300]/40 rounded-2xl shadow-lg shadow-[#E79300]/10 min-w-[70px] md:min-w-[90px]">
                     <span className="text-3xl md:text-5xl font-serif text-[#CF2F2A] mb-1 tracking-tight">
                         {block.value.toString().padStart(2, "0")}
                     </span>

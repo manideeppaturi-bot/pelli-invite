@@ -12,7 +12,7 @@ export function AudioPlayer() {
 
     // Randomize BGM on client only to avoid SSR hydration mismatch
     useEffect(() => {
-        const songs = ["/kalyanam_bgm.mp3", "/song1_bgm.mp3", "/song2_bgm.mp3", "/song3_bgm.mp3", "/song4_bgm.mp3"];
+        const songs = ["/dude_bgm.mp3", "/jashn_e_bahara_bgm.mp3", "/varsham_bgm.mp3"];
         setAudioSrc(songs[Math.floor(Math.random() * songs.length)]);
     }, []);
 

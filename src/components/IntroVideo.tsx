@@ -25,6 +25,25 @@ export function IntroVideo() {
         window.dispatchEvent(new CustomEvent("video-paused"));
     };
 
+    const handleEnded = () => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        // Exit fullscreen if active
+        if (document.fullscreenElement) {
+            document.exitFullscreen().catch(() => { });
+        } else if ((document as unknown as { webkitFullscreenElement?: Element }).webkitFullscreenElement) {
+            (document as unknown as { webkitExitFullscreen: () => void }).webkitExitFullscreen();
+        }
+
+        // Reset video to the beginning and pause
+        video.currentTime = 0;
+        video.pause();
+
+        // Resume background music
+        window.dispatchEvent(new CustomEvent("video-paused"));
+    };
+
     return (
         <section className="w-full py-24 px-4 bg-[#FDF9D2] relative overflow-hidden flex flex-col items-center">
 
@@ -60,7 +79,7 @@ export function IntroVideo() {
                         className="w-full h-full object-cover"
                         onPlay={handlePlay}
                         onPause={handlePause}
-                        onEnded={handlePause}
+                        onEnded={handleEnded}
                         src="/intro-video.mp4"
                     />
                 </motion.div>
