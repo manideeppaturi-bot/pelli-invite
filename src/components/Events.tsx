@@ -236,12 +236,12 @@ export function Events() {
     return (
         <section ref={containerRef} className="w-full py-40 px-4 bg-[#E6D3FF] relative overflow-hidden">
 
-            {/* Peeking Family (Top edge - Animated) */}
+            {/* Peeking Groom's Family (Left edge) */}
             <motion.div
-                initial={{ y: -150, opacity: 0 }}
-                animate={{ y: -20, opacity: 1 }}
+                initial={{ x: -150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute top-0 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-[320px] sm:w-[450px] md:w-[600px] lg:w-[700px] h-[20%] sm:h-[25%] md:h-[30%]"
+                className="absolute top-0 left-0 z-30 pointer-events-none w-[200px] sm:w-[280px] md:w-[380px] h-[20%] sm:h-[25%] md:h-[30%] -translate-x-[20%] md:-translate-x-[10%]"
             >
                 <motion.div
                     animate={{ y: [0, 15, 0] }}
@@ -249,10 +249,32 @@ export function Events() {
                     className="relative w-full h-full"
                 >
                     <Image
-                        src="/family_icon_clean.png"
-                        alt="Family"
+                        src="/groom_family_clean.png"
+                        alt="Groom Family"
                         fill
-                        className="object-contain object-top"
+                        className="object-contain object-left-top"
+                        priority
+                    />
+                </motion.div>
+            </motion.div>
+
+            {/* Peeking Bride's Family (Right edge) */}
+            <motion.div
+                initial={{ x: 150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                className="absolute top-0 right-0 z-30 pointer-events-none w-[200px] sm:w-[280px] md:w-[380px] h-[20%] sm:h-[25%] md:h-[30%] translate-x-[20%] md:translate-x-[10%]"
+            >
+                <motion.div
+                    animate={{ y: [0, 15, 0] }}
+                    transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative w-full h-full"
+                >
+                    <Image
+                        src="/bride_family_clean.png"
+                        alt="Bride Family"
+                        fill
+                        className="object-contain object-right-top"
                         priority
                     />
                 </motion.div>
@@ -274,8 +296,8 @@ export function Events() {
                 <div className="w-[500px] h-[500px] border-[1px] border-dashed border-[#CF2F2A]/20 rounded-full" />
             </motion.div>
 
-            <div className="max-w-7xl mx-auto relative z-10 pt-16">
-                <div className="text-center mb-24">
+            <div className="max-w-7xl mx-auto relative z-10 pt-32 sm:pt-40 md:pt-48">
+                <div className="text-center mb-16 md:mb-24 relative z-40 bg-white/40 backdrop-blur-sm rounded-3xl py-4 mx-4 md:bg-transparent md:backdrop-blur-none md:py-0 md:mx-0 shadow-sm md:shadow-none border border-white/50 md:border-none inline-block px-12 md:px-0 md:block">
                     <motion.h2
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}

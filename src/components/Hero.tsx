@@ -2,13 +2,24 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Countdown } from "./Countdown";
 
 import { FloatingParticles } from "./FloatingParticles";
 
 export function Hero() {
     const { scrollY } = useScroll();
-    const parallaxY = useTransform(scrollY, [0, 800], [0, 250]);
+
+    // We only want parallax on desktop. On mobile (<= 768px), disable it to prevent jerky rendering
+    const [isMobile, setIsMobile] = useState(true);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    const parallaxY = useTransform(scrollY, [0, 800], [0, isMobile ? 0 : 250]);
 
     return (
         <div className="relative w-full h-full flex flex-col items-center overflow-hidden bg-[#FDF9D2]">

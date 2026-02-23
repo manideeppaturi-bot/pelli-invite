@@ -80,7 +80,7 @@ export function Story() {
 
                     <motion.div
                         style={{ y: textY }}
-                        className="space-y-8 order-2 md:order-1 relative z-20"
+                        className="space-y-8 order-2 md:order-1 relative z-20 px-8 pr-16 md:px-0"
                     >
                         {/* Cute Lotus Infographic */}
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E79300" strokeWidth="1" className="mb-4 opacity-80" strokeLinecap="round" strokeLinejoin="round">
