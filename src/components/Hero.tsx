@@ -13,7 +13,6 @@ const generateLanterns = (count: number) => {
         animationDuration: `${10 + Math.random() * 20}s`,
         delay: `0s`, // No delay, start immediately
         scale: 0.5 + Math.random() * 0.8,
-        type: ["diya", "flower", "orb"][Math.floor(Math.random() * 3)],
     }));
 };
 
@@ -24,7 +23,7 @@ export function Hero() {
         let isMounted = true;
         if (isMounted) {
             // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
-            setLanterns(generateLanterns(35));
+            setLanterns(generateLanterns(15));
         }
         return () => { isMounted = false; };
     }, []);
@@ -42,7 +41,7 @@ export function Hero() {
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="absolute bottom-0 left-0 w-full z-10 flex justify-center pointer-events-none"
             >
-                <div className="relative w-[200vw] md:w-[120vw] max-w-[1800px] h-[35vh] sm:h-[45vh] md:h-[65vh] lg:h-[70vh] mix-blend-multiply">
+                <div className="relative w-[200vw] md:w-[120vw] max-w-[1800px] h-[50vh] md:h-[70vh] mix-blend-multiply">
                     <Image
                         src="/gopuram.png"
                         alt="Temple Gopuram"
@@ -69,35 +68,10 @@ export function Hero() {
                         className="absolute"
                         style={{ left: lantern.left, transform: `scale(${lantern.scale})` }}
                     >
-                        {lantern.type === "diya" && (
-                            <div className="relative w-12 h-10 -ml-6 drop-shadow-[0_4px_10px_rgba(255,165,0,0.4)]">
-                                {/* Traditional Clay Diya SVG */}
-                                <svg viewBox="0 0 64 64" className="w-full h-full overflow-visible">
-                                    <path d="M32 5 Q38 20 32 30 Q26 20 32 5 Z" fill="#FFC107" className="animate-pulse drop-shadow-[0_0_8px_rgba(255,200,0,0.8)]" />
-                                    <path d="M32 12 Q35 20 32 26 Q29 20 32 12 Z" fill="#FFE082" />
-                                    <path d="M10 30 Q32 55 54 30 Z" fill="#A03A21" />
-                                    <path d="M10 30 Q32 40 54 30 Z" fill="#7D2915" />
-                                    <circle cx="32" cy="30" r="16" fill="#CC4B2A" />
-                                </svg>
-                            </div>
-                        )}
-
-                        {lantern.type === "flower" && (
-                            <div className="relative w-10 h-10 -ml-5 animate-[spin_12s_linear_infinite] drop-shadow-md opacity-90">
-                                {/* Orange/Yellow Marigold SVG */}
-                                <svg viewBox="0 0 64 64" className="w-full h-full">
-                                    <circle cx="32" cy="32" r="28" fill="#F57C00" />
-                                    <circle cx="32" cy="32" r="20" fill="#FF9800" />
-                                    <circle cx="32" cy="32" r="12" fill="#FFC107" />
-                                    <path d="M32 4 L32 60 M4 32 L60 32 M12 12 L52 52 M12 52 L52 12" stroke="#E65100" strokeWidth="3" strokeDasharray="2 6" className="opacity-50" />
-                                    <circle cx="32" cy="32" r="4" fill="#FFEB3B" />
-                                </svg>
-                            </div>
-                        )}
-
-                        {lantern.type === "orb" && (
-                            <div className="w-6 h-6 -ml-3 rounded-full bg-gradient-to-tr from-yellow-200 to-orange-400 blur-[2px] opacity-70 shadow-[0_0_15px_rgba(255,200,0,0.9)]" />
-                        )}
+                        {/* Elegant South Indian Lamp / Lantern abstract shape */}
+                        <div className="w-10 h-14 rounded-lg bg-gradient-to-b from-orange-300 via-pink-400 to-yellow-200 opacity-80 shadow-[0_0_15px_rgba(255,182,193,0.8)] relative">
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 w-8 h-3 bg-yellow-400/80 rounded-b-full blur-[2px]" />
+                        </div>
                     </motion.div>
                 ))}
             </div>
@@ -107,7 +81,7 @@ export function Hero() {
                 initial={{ x: 150, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute bottom-0 right-0 z-40 pointer-events-none mix-blend-multiply w-[140px] sm:w-[200px] md:w-[350px] lg:w-[400px] h-[40%] sm:h-[50%] md:h-[60%]"
+                className="absolute bottom-0 right-0 z-40 pointer-events-none mix-blend-multiply w-[100px] sm:w-[150px] md:w-[350px] lg:w-[400px] h-[35%] sm:h-[45%] md:h-[60%]"
             >
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
@@ -125,7 +99,7 @@ export function Hero() {
             </motion.div>
 
             {/* Main Text (Center Foreground) */}
-            <div className="relative z-30 flex flex-col items-center justify-start pt-[6vh] sm:pt-[8vh] md:pt-[12vh] lg:pt-[15vh] w-full pointer-events-none drop-shadow-sm">
+            <div className="relative z-30 flex flex-col items-center justify-start pt-[12vh] sm:pt-[12vh] md:pt-[15vh] lg:pt-[15vh] w-full pointer-events-none drop-shadow-sm">
                 <motion.span
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
