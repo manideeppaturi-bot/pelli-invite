@@ -29,7 +29,7 @@ export function Story() {
                 initial={{ x: -150, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute top-1/4 left-0 z-30 pointer-events-none mix-blend-multiply w-[140px] sm:w-[180px] md:w-[250px] lg:w-[300px] h-[30%] sm:h-[40%] md:h-[50%]"
+                className="absolute top-1/4 left-0 z-30 pointer-events-none w-[180px] sm:w-[220px] md:w-[300px] lg:w-[350px] h-[35%] sm:h-[40%] md:h-[50%] -translate-x-[35%] md:-translate-x-[10%]"
             >
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
@@ -37,7 +37,7 @@ export function Story() {
                     className="relative w-full h-full"
                 >
                     <Image
-                        src="/couple_icon.png"
+                        src="/couple_modern_icon.png"
                         alt="Mani & Supriya"
                         fill
                         className="object-contain object-left-bottom"
