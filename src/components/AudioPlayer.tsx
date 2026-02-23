@@ -62,7 +62,7 @@ export function AudioPlayer() {
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0, scale: 1.1 }}
                         transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#CF2F2A] cursor-pointer"
+                        className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#FDF9D2] cursor-pointer"
                         onClick={handleEnter}
                     >
                         {/* Background pattern */}
@@ -75,14 +75,14 @@ export function AudioPlayer() {
                         >
                             <div className="relative w-64 h-64 md:w-80 md:h-80 mb-6 drop-shadow-2xl">
                                 <Image
-                                    src="/mani_suppu_icon.png"
+                                    src="/mani_suppu_icon_clean.png"
                                     alt="Mani & Suppu"
                                     fill
                                     className="object-contain"
                                     priority
                                 />
                             </div>
-                            <p className="font-sans text-[#E79300] tracking-[0.4em] text-xs md:text-sm uppercase drop-shadow-md">
+                            <p className="font-sans text-[#CF2F2A] tracking-[0.4em] text-xs md:text-sm uppercase drop-shadow-md">
                                 Tap anywhere to open
                             </p>
                         </motion.div>

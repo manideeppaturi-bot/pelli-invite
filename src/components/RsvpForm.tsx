@@ -45,15 +45,16 @@ export function RsvpForm() {
                 });
                 if (session.id) setSessionId(session.id);
                 if (session.name) setWelcomeName(session.name.split(" ")[0]);
-            } catch (e) {
-                console.error("Failed to parse session", e);
+            } catch {
+                console.error("Failed to parse session");
             }
         }
     }, []);
 
     const playDing = () => {
         try {
-            const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+            const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+            const audioCtx = new AudioContextClass();
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
             oscillator.type = "sine";
@@ -66,7 +67,7 @@ export function RsvpForm() {
             gainNode.connect(audioCtx.destination);
             oscillator.start(audioCtx.currentTime);
             oscillator.stop(audioCtx.currentTime + 0.5);
-        } catch (e) { }
+        } catch { }
     }
 
     const handleSubmit = async (e: React.FormEvent) => {

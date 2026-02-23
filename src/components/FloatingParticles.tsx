@@ -7,8 +7,19 @@ interface FloatingParticlesProps {
     count?: number;
 }
 
+interface LanternData {
+    id: number;
+    left: string;
+    startY: string;
+    animationDuration: string;
+    delay: string;
+    scale: number;
+    orbitDuration?: string;
+    type: string;
+}
+
 export function FloatingParticles({ count = 10 }: FloatingParticlesProps) {
-    const [lanterns, setLanterns] = useState<any[]>([]);
+    const [lanterns, setLanterns] = useState<LanternData[]>([]);
 
     useEffect(() => {
         let isMounted = true;
@@ -30,9 +41,11 @@ export function FloatingParticles({ count = 10 }: FloatingParticlesProps) {
                     animationDuration: `${10 + Math.random() * 15}s`,
                     delay: `${Math.random() * 5}s`,
                     scale: 0.5 + Math.random() * 0.6,
+                    orbitDuration: `${15 + Math.random() * 10}`,
                     type: ["orange_lantern", "flower", "orb"][Math.floor(Math.random() * 3)],
                 };
             });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             setLanterns(generated);
         }
         return () => { isMounted = false; };
@@ -40,7 +53,7 @@ export function FloatingParticles({ count = 10 }: FloatingParticlesProps) {
 
     return (
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            {lanterns.map((lantern: any) => (
+            {lanterns.map((lantern: LanternData) => (
                 <div key={lantern.id}>
                     {lantern.type === "orange_lantern" && (
                         <motion.div
@@ -118,7 +131,7 @@ export function FloatingParticles({ count = 10 }: FloatingParticlesProps) {
                         >
                             <motion.div
                                 animate={{ rotate: 360 }}
-                                transition={{ duration: 15 + Math.random() * 10, repeat: Infinity, ease: "linear" }}
+                                transition={{ duration: parseFloat(lantern.orbitDuration || "20"), repeat: Infinity, ease: "linear" }}
                                 className="w-24 h-24 flex items-start justify-start origin-center -ml-12 -mt-12"
                             >
                                 <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-yellow-200 to-orange-400 blur-[2px] opacity-70 shadow-[0_0_15px_rgba(255,200,0,0.8)]" />
