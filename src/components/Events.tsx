@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import { FloatingParticles } from "./FloatingParticles";
 
 const events = [
     {
@@ -63,6 +64,8 @@ export function Events() {
 
     return (
         <section ref={containerRef} className="w-full py-32 px-4 bg-[#E6D3FF] relative overflow-hidden">
+
+            <FloatingParticles count={6} />
 
             {/* 1. Deep Parallax Background Motif */}
             <motion.div

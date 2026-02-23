@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import { FloatingParticles } from "./FloatingParticles";
 
 export function Story() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -22,6 +23,8 @@ export function Story() {
             {/* Saree Border Top */}
             <div className="absolute top-0 left-0 w-full h-6 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_10px,#CF2F2A_10px,#CF2F2A_20px)] shadow-md z-20 opacity-90" />
             <div className="absolute top-6 left-0 w-full h-2 bg-gradient-to-r from-[#CF2F2A] via-[#E79300] to-[#CF2F2A] z-20" />
+
+            <FloatingParticles count={6} />
 
             {/* Subtle Background Art / Texture */}
             <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/floral-motif.png')] pointer-events-none z-0" />

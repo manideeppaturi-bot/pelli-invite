@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { FloatingParticles } from "./FloatingParticles";
 
 export function RsvpForm() {
     const [formData, setFormData] = useState({
@@ -58,7 +59,8 @@ export function RsvpForm() {
     }
 
     return (
-        <section id="rsvp" className="w-full py-32 px-4 bg-[#CF2F2A] text-[#FDF9D2] relative">
+        <section id="rsvp" className="w-full py-32 px-4 bg-[#CF2F2A] text-[#FDF9D2] relative overflow-hidden">
+            <FloatingParticles count={4} />
             <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/floral-motif.png')] pointer-events-none" />
 
             {/* Saree Border Top Separator */}
