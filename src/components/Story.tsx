@@ -24,12 +24,11 @@ export function Story() {
             <div className="absolute top-0 left-0 w-full h-6 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_10px,#CF2F2A_10px,#CF2F2A_20px)] shadow-md z-20 opacity-90" />
             <div className="absolute top-6 left-0 w-full h-2 bg-gradient-to-r from-[#CF2F2A] via-[#E79300] to-[#CF2F2A] z-20" />
 
-            {/* Peeking Couple (Left edge - Animated) */}
+            {/* Peeking Couple (Left edge - Continuous Hide & Peek) */}
             <motion.div
-                initial={{ x: -150, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute top-1/4 left-0 z-30 pointer-events-none w-[180px] sm:w-[220px] md:w-[300px] lg:w-[350px] h-[35%] sm:h-[40%] md:h-[50%] -translate-x-[35%] md:-translate-x-[10%]"
+                animate={{ x: ["-60%", "0%", "0%", "-60%"] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", times: [0, 0.3, 0.7, 1] }}
+                className="absolute top-1/4 left-0 z-30 pointer-events-none w-[120px] sm:w-[160px] md:w-[250px] lg:w-[300px] h-[30%] sm:h-[35%] md:h-[50%]"
             >
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
@@ -80,7 +79,7 @@ export function Story() {
 
                     <motion.div
                         style={{ y: textY }}
-                        className="space-y-8 order-2 md:order-1 relative z-20 px-8 pr-16 md:px-0"
+                        className="space-y-8 order-2 md:order-1 relative z-20 px-8 pl-16 sm:pl-20 md:pl-8 pr-16 md:px-0"
                     >
                         {/* Cute Lotus Infographic */}
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E79300" strokeWidth="1" className="mb-4 opacity-80" strokeLinecap="round" strokeLinejoin="round">

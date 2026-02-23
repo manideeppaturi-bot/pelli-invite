@@ -8,14 +8,13 @@ export function AudioPlayer() {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [hasEntered, setHasEntered] = useState(false);
-    const [audioSrc] = useState<string>(() => {
-        // Randomize BGM
-        if (typeof window !== 'undefined') {
-            const songs = ["/dude_bgm.mp3", "/jashn_e_bahara_bgm.mp3", "/varsham_bgm.mp3", "/kalyanam_bgm.mp3", "/seetha_kalyanam_bgm.mp3"];
-            return songs[Math.floor(Math.random() * songs.length)];
-        }
-        return "";
-    });
+    const [audioSrc, setAudioSrc] = useState("");
+
+    // Randomize BGM on client only to avoid SSR hydration mismatch
+    useEffect(() => {
+        const songs = ["/kalyanam_bgm.mp3", "/song1_bgm.mp3", "/song2_bgm.mp3", "/song3_bgm.mp3", "/song4_bgm.mp3"];
+        setAudioSrc(songs[Math.floor(Math.random() * songs.length)]);
+    }, []);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -83,7 +82,13 @@ export function AudioPlayer() {
                                     priority
                                 />
                             </div>
-                            <p className="font-sans text-[#CF2F2A] tracking-[0.4em] text-xs md:text-sm uppercase drop-shadow-md">
+                            <h2 className="font-serif text-3xl md:text-4xl text-[#CF2F2A] mb-2 drop-shadow-md">
+                                Mani <span className="text-[#E79300]">❤️</span> Suppu
+                            </h2>
+                            <p className="font-sans text-[#696B36]/80 tracking-[0.2em] text-[10px] md:text-xs uppercase mb-6">
+                                Wedding Celebration
+                            </p>
+                            <p className="font-sans text-[#CF2F2A] tracking-[0.4em] text-xs md:text-sm uppercase drop-shadow-md animate-pulse">
                                 Tap anywhere to open
                             </p>
                         </motion.div>
@@ -93,7 +98,7 @@ export function AudioPlayer() {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <audio ref={audioRef} src={audioSrc} loop />
+            {audioSrc && <audio ref={audioRef} src={audioSrc} loop />}
         </>
     );
 }

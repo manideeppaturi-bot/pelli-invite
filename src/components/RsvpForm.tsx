@@ -219,6 +219,7 @@ export function RsvpForm() {
                                 <input
                                     type="text"
                                     required
+                                    autoComplete="off"
                                     className="w-full bg-white/50 border-b-2 border-[#696B36]/30 px-4 py-3 focus:outline-none focus:border-[#CF2F2A] text-[#696B36] font-serif text-xl placeholder:text-[#696B36]/40 transition-colors"
                                     placeholder="Your Full Name"
                                     value={formData.name}

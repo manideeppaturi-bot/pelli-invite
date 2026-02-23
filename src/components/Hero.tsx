@@ -33,7 +33,7 @@ export function Hero() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 style={{ y: parallaxY }}
-                className="absolute bottom-0 left-0 w-full z-10 flex justify-center pointer-events-none"
+                className="absolute bottom-0 left-0 w-full z-[5] flex justify-center pointer-events-none"
             >
                 {/* Raised mobile arch height to close the visual gap */}
                 <div className="relative w-[250vw] sm:w-[150vw] md:w-[120vw] max-w-[1800px] h-[80vh] sm:h-[65vh] md:h-[70vh] mix-blend-multiply">
@@ -58,7 +58,7 @@ export function Hero() {
                 initial={{ x: 150, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute bottom-0 right-0 z-40 pointer-events-none w-[240px] sm:w-[200px] md:w-[350px] lg:w-[400px] h-[45%] sm:h-[50%] md:h-[60%] translate-x-[20%] md:translate-x-0"
+                className="absolute bottom-0 right-0 z-40 pointer-events-none w-[240px] sm:w-[200px] md:w-[350px] lg:w-[400px] h-[45%] sm:h-[50%] md:h-[60%] translate-x-[40%] sm:translate-x-[30%] md:translate-x-0"
             >
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
