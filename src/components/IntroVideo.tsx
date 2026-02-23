@@ -41,7 +41,7 @@ export function IntroVideo() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-[#45A086]/20 bg-black/5"
+                    className="relative w-full aspect-[9/16] max-w-md mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-[#45A086]/20 bg-black/5"
                 >
                     {/* The video from the user */}
                     <video
