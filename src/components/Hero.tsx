@@ -6,15 +6,23 @@ import { useEffect, useState } from "react";
 import { Countdown } from "./Countdown";
 
 const generateLanterns = (count: number) => {
-    return Array.from({ length: count }).map((_, i) => ({
-        id: i,
-        left: `${Math.random() * 90}%`,
-        startY: `${Math.random() * 100}vh`, // Start randomly within the screen
-        animationDuration: `${10 + Math.random() * 20}s`,
-        delay: `0s`, // No delay, start immediately
-        scale: 0.5 + Math.random() * 0.8,
-        type: ["red_lantern", "diya", "flower", "orb", "red_lantern"][Math.floor(Math.random() * 5)], // Weighted slightly towards the new red lantern
-    }));
+    return Array.from({ length: count }).map((_, i) => {
+        // 80% chance to spawn on the side edges to keep center clean
+        let leftPercent = Math.random() * 100;
+        if (Math.random() < 0.8) {
+            leftPercent = Math.random() < 0.5 ? Math.random() * 25 : 75 + Math.random() * 25;
+        }
+
+        return {
+            id: i,
+            left: `${leftPercent}%`,
+            startY: `${Math.random() * 100}vh`, // Start randomly within the screen
+            animationDuration: `${10 + Math.random() * 20}s`,
+            delay: `${Math.random() * 5}s`,
+            scale: 0.5 + Math.random() * 0.8,
+            type: ["red_lantern", "flower", "orb"][Math.floor(Math.random() * 3)],
+        };
+    });
 };
 
 export function Hero() {
@@ -23,8 +31,9 @@ export function Hero() {
     useEffect(() => {
         let isMounted = true;
         if (isMounted) {
+            const isMobile = window.innerWidth < 768;
             // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
-            setLanterns(generateLanterns(35));
+            setLanterns(generateLanterns(isMobile ? 12 : 24)); // Reduced count by 30-60% based on user request
         }
         return () => { isMounted = false; };
     }, []);
@@ -54,81 +63,99 @@ export function Hero() {
                 </div>
             </motion.div>
 
-            {/* Floating Lanterns (Mid-Background) */}
+            {/* Floating Elements (Mid-Background) */}
             <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
                 {lanterns.map((lantern: any) => (
-                    <motion.div
-                        key={lantern.id}
-                        initial={{ y: lantern.startY, opacity: 0 }}
-                        animate={{ y: "-20vh", opacity: [0, 1, 1, 1, 0] }}
-                        transition={{
-                            duration: parseFloat(lantern.animationDuration),
-                            repeat: Infinity,
-                            delay: 0,
-                            ease: "linear",
-                        }}
-                        className="absolute"
-                        style={{ left: lantern.left, transform: `scale(${lantern.scale})` }}
-                    >
+                    <div key={lantern.id}>
                         {lantern.type === "red_lantern" && (
-                            <div className="relative w-14 h-16 -ml-7 drop-shadow-[0_8px_16px_rgba(255,0,0,0.5)] opacity-90">
-                                {/* Red Sky Lantern matching user reference */}
-                                <svg viewBox="0 0 100 120" className="w-full h-full overflow-visible">
-                                    {/* Lantern Body (Red Gradient) */}
-                                    <defs>
-                                        <linearGradient id={`red-grad-${lantern.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                                            <stop offset="0%" stopColor="#FF1744" />
-                                            <stop offset="60%" stopColor="#D50000" />
-                                            <stop offset="100%" stopColor="#FF8A80" />
-                                        </linearGradient>
-                                        <radialGradient id={`glow-${lantern.id}`} cx="50%" cy="85%" r="50%">
-                                            <stop offset="0%" stopColor="#FFEA00" stopOpacity="0.8" />
-                                            <stop offset="100%" stopColor="#FF9100" stopOpacity="0" />
-                                        </radialGradient>
-                                    </defs>
-                                    {/* Main Balloon Shape */}
-                                    <path d="M 20 10 C 20 10, 50 -5, 80 10 C 95 20, 95 60, 80 90 L 65 105 C 55 110, 45 110, 35 105 L 20 90 C 5 60, 5 20, 20 10 Z" fill={`url(#red-grad-${lantern.id})`} stroke="#B71C1C" strokeWidth="1" />
-                                    {/* Inner Glow from Flame */}
-                                    <path d="M 20 10 C 20 10, 50 -5, 80 10 C 95 20, 95 60, 80 90 L 65 105 C 55 110, 45 110, 35 105 L 20 90 C 5 60, 5 20, 20 10 Z" fill={`url(#glow-${lantern.id})`} />
-                                    {/* Base Wire Hoop */}
-                                    <ellipse cx="50" cy="108" rx="16" ry="4" stroke="#00E5FF" strokeWidth="2" fill="none" />
-                                    {/* Flame */}
-                                    <path d="M 50 95 C 55 105, 50 110, 50 110 C 50 110, 45 105, 50 95 Z" fill="#FFC107" className="animate-pulse" />
-                                    <path d="M 50 100 C 52 106, 50 108, 50 108 C 50 108, 48 106, 50 100 Z" fill="#FFF8E1" />
-                                </svg>
-                            </div>
-                        )}
-
-                        {lantern.type === "diya" && (
-                            <div className="relative w-12 h-10 -ml-6 drop-shadow-[0_4px_10px_rgba(255,165,0,0.4)]">
-                                {/* Traditional Clay Diya SVG */}
-                                <svg viewBox="0 0 64 64" className="w-full h-full overflow-visible">
-                                    <path d="M32 5 Q38 20 32 30 Q26 20 32 5 Z" fill="#FFC107" className="animate-pulse drop-shadow-[0_0_8px_rgba(255,200,0,0.8)]" />
-                                    <path d="M32 12 Q35 20 32 26 Q29 20 32 12 Z" fill="#FFE082" />
-                                    <path d="M10 30 Q32 55 54 30 Z" fill="#A03A21" />
-                                    <path d="M10 30 Q32 40 54 30 Z" fill="#7D2915" />
-                                    <circle cx="32" cy="30" r="16" fill="#CC4B2A" />
-                                </svg>
-                            </div>
+                            <motion.div
+                                initial={{ y: "110vh", opacity: 0 }}
+                                animate={{ y: "-20vh", opacity: [0, 1, 1, 1, 0] }}
+                                transition={{
+                                    duration: parseFloat(lantern.animationDuration),
+                                    repeat: Infinity,
+                                    delay: parseFloat(lantern.delay),
+                                    ease: "linear",
+                                }}
+                                className="absolute"
+                                style={{ left: lantern.left, transform: `scale(${lantern.scale})` }}
+                            >
+                                <div className="relative w-14 h-16 -ml-7 drop-shadow-[0_8px_16px_rgba(255,0,0,0.5)] opacity-90">
+                                    {/* Red Sky Lantern matching user reference */}
+                                    <svg viewBox="0 0 100 120" className="w-full h-full overflow-visible">
+                                        {/* Lantern Body (Red Gradient) */}
+                                        <defs>
+                                            <linearGradient id={`red-grad-${lantern.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" stopColor="#FF1744" />
+                                                <stop offset="60%" stopColor="#D50000" />
+                                                <stop offset="100%" stopColor="#FF8A80" />
+                                            </linearGradient>
+                                            <radialGradient id={`glow-${lantern.id}`} cx="50%" cy="85%" r="50%">
+                                                <stop offset="0%" stopColor="#FFEA00" stopOpacity="0.8" />
+                                                <stop offset="100%" stopColor="#FF9100" stopOpacity="0" />
+                                            </radialGradient>
+                                        </defs>
+                                        {/* Main Balloon Shape */}
+                                        <path d="M 20 10 C 20 10, 50 -5, 80 10 C 95 20, 95 60, 80 90 L 65 105 C 55 110, 45 110, 35 105 L 20 90 C 5 60, 5 20, 20 10 Z" fill={`url(#red-grad-${lantern.id})`} stroke="#B71C1C" strokeWidth="1" />
+                                        {/* Inner Glow from Flame */}
+                                        <path d="M 20 10 C 20 10, 50 -5, 80 10 C 95 20, 95 60, 80 90 L 65 105 C 55 110, 45 110, 35 105 L 20 90 C 5 60, 5 20, 20 10 Z" fill={`url(#glow-${lantern.id})`} />
+                                        {/* Base Wire Hoop */}
+                                        <ellipse cx="50" cy="108" rx="16" ry="4" stroke="#00E5FF" strokeWidth="2" fill="none" />
+                                        {/* Flame */}
+                                        <path d="M 50 95 C 55 105, 50 110, 50 110 C 50 110, 45 105, 50 95 Z" fill="#FFC107" className="animate-pulse" />
+                                        <path d="M 50 100 C 52 106, 50 108, 50 108 C 50 108, 48 106, 50 100 Z" fill="#FFF8E1" />
+                                    </svg>
+                                </div>
+                            </motion.div>
                         )}
 
                         {lantern.type === "flower" && (
-                            <div className="relative w-12 h-12 -ml-6 animate-[spin_12s_linear_infinite] drop-shadow-md opacity-90">
-                                {/* Orange/Yellow Marigold SVG */}
-                                <svg viewBox="0 0 64 64" className="w-full h-full">
-                                    <circle cx="32" cy="32" r="28" fill="#F57C00" />
-                                    <circle cx="32" cy="32" r="20" fill="#FF9800" />
-                                    <circle cx="32" cy="32" r="12" fill="#FFC107" />
-                                    <path d="M32 4 L32 60 M4 32 L60 32 M12 12 L52 52 M12 52 L52 12" stroke="#E65100" strokeWidth="3" strokeDasharray="2 6" className="opacity-50" />
-                                    <circle cx="32" cy="32" r="4" fill="#FFEB3B" />
-                                </svg>
-                            </div>
+                            <motion.div
+                                initial={{ y: lantern.startY, opacity: 0 }}
+                                animate={{
+                                    opacity: [0, 0.7, 0.9, 0.7, 0]
+                                }}
+                                transition={{
+                                    duration: parseFloat(lantern.animationDuration) * 0.8,
+                                    repeat: Infinity,
+                                    delay: parseFloat(lantern.delay),
+                                    ease: "easeInOut",
+                                }}
+                                className="absolute"
+                                style={{ left: lantern.left, top: lantern.startY, transform: `scale(${lantern.scale})` }}
+                            >
+                                <div className="relative w-12 h-12 -ml-6 animate-[spin_12s_linear_infinite] drop-shadow-md opacity-90">
+                                    {/* Orange/Yellow Marigold SVG */}
+                                    <svg viewBox="0 0 64 64" className="w-full h-full">
+                                        <circle cx="32" cy="32" r="28" fill="#F57C00" />
+                                        <circle cx="32" cy="32" r="20" fill="#FF9800" />
+                                        <circle cx="32" cy="32" r="12" fill="#FFC107" />
+                                        <path d="M32 4 L32 60 M4 32 L60 32 M12 12 L52 52 M12 52 L52 12" stroke="#E65100" strokeWidth="3" strokeDasharray="2 6" className="opacity-50" />
+                                        <circle cx="32" cy="32" r="4" fill="#FFEB3B" />
+                                    </svg>
+                                </div>
+                            </motion.div>
                         )}
 
                         {lantern.type === "orb" && (
-                            <div className="w-8 h-8 -ml-4 rounded-full bg-gradient-to-tr from-yellow-200 to-orange-400 blur-[3px] opacity-70 shadow-[0_0_20px_rgba(255,200,0,0.9)]" />
+                            <motion.div
+                                initial={{ y: lantern.startY, opacity: 0 }}
+                                animate={{
+                                    opacity: [0, 0.5, 0.8, 0.5, 0]
+                                }}
+                                transition={{
+                                    duration: parseFloat(lantern.animationDuration) * 0.6,
+                                    repeat: Infinity,
+                                    delay: parseFloat(lantern.delay),
+                                    ease: "easeInOut",
+                                }}
+                                className="absolute"
+                                style={{ left: lantern.left, top: lantern.startY, transform: `scale(${lantern.scale})` }}
+                            >
+                                <div className="w-8 h-8 -ml-4 rounded-full bg-gradient-to-tr from-yellow-200 to-orange-400 blur-[3px] opacity-70 shadow-[0_0_20px_rgba(255,200,0,0.9)]" />
+                            </motion.div>
                         )}
-                    </motion.div>
+                    </div>
                 ))}
             </div>
 

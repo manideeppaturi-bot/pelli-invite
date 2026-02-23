@@ -21,11 +21,20 @@ export function CursorTrail() {
         const handleMouseMove = (e: MouseEvent) => {
             // Only generate particles occasionally to avoid lagging
             if (Math.random() > 0.4) return;
+            createParticle(e.clientX, e.clientY);
+        };
 
+        const handleTouchMove = (e: TouchEvent) => {
+            if (Math.random() > 0.4) return;
+            const touch = e.touches[0];
+            createParticle(touch.clientX, touch.clientY);
+        };
+
+        const createParticle = (x: number, y: number) => {
             const newParticle: Particle = {
                 id: particleId++,
-                x: e.clientX,
-                y: e.clientY,
+                x,
+                y,
                 color: colors[Math.floor(Math.random() * colors.length)],
                 size: Math.random() * 10 + 4, // 4px to 14px
             };
@@ -39,7 +48,12 @@ export function CursorTrail() {
         };
 
         window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
+        window.addEventListener("touchmove", handleTouchMove, { passive: true });
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("touchmove", handleTouchMove);
+        };
     }, []);
 
     return (
