@@ -1,12 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { Countdown } from "./Countdown";
 
 import { FloatingParticles } from "./FloatingParticles";
 
 export function Hero() {
+    const { scrollY } = useScroll();
+    const parallaxY = useTransform(scrollY, [0, 800], [0, 250]);
 
     return (
         <div className="relative w-full h-full flex flex-col items-center overflow-hidden bg-[#FDF9D2]">
@@ -19,6 +21,7 @@ export function Hero() {
                 initial={{ y: 200, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
+                style={{ y: parallaxY }}
                 className="absolute bottom-0 left-0 w-full z-10 flex justify-center pointer-events-none"
             >
                 {/* Raised mobile arch height to close the visual gap */}
@@ -33,8 +36,10 @@ export function Hero() {
                 </div>
             </motion.div>
 
-            {/* Floating Elements (Mid-Background) */}
-            <FloatingParticles count={15} />
+            {/* Floating Elements Layers: Foreground layer above Gopuram */}
+            <div className="absolute inset-0 z-20 pointer-events-none">
+                <FloatingParticles count={25} />
+            </div>
 
 
             {/* Peeking Gods (Right edge - Enlarged and Animated) */}
@@ -42,7 +47,7 @@ export function Hero() {
                 initial={{ x: 150, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute bottom-0 right-0 z-40 pointer-events-none mix-blend-multiply w-[240px] sm:w-[200px] md:w-[350px] lg:w-[400px] h-[45%] sm:h-[50%] md:h-[60%] translate-x-[40%] md:translate-x-0"
+                className="absolute bottom-0 right-0 z-40 pointer-events-none w-[240px] sm:w-[200px] md:w-[350px] lg:w-[400px] h-[45%] sm:h-[50%] md:h-[60%] translate-x-[20%] md:translate-x-0"
             >
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
@@ -50,10 +55,10 @@ export function Hero() {
                     className="relative w-full h-full"
                 >
                     <Image
-                        src="/gods.png"
+                        src="/gods_clean.png"
                         alt="Hindu Gods"
                         fill
-                        className="object-contain object-center md:object-right-bottom"
+                        className="object-contain object-bottom md:object-right-bottom"
                         priority
                     />
                 </motion.div>

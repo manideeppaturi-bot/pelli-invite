@@ -241,7 +241,7 @@ export function Events() {
                 initial={{ y: -150, opacity: 0 }}
                 animate={{ y: -20, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="absolute top-0 left-1/2 -translate-x-1/2 z-30 pointer-events-none mix-blend-multiply w-[260px] sm:w-[350px] md:w-[450px] h-[20%] sm:h-[25%] md:h-[30%]"
+                className="absolute top-0 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-[320px] sm:w-[450px] md:w-[600px] lg:w-[700px] h-[20%] sm:h-[25%] md:h-[30%]"
             >
                 <motion.div
                     animate={{ y: [0, 15, 0] }}
@@ -249,7 +249,7 @@ export function Events() {
                     className="relative w-full h-full"
                 >
                     <Image
-                        src="/family_icon.png"
+                        src="/family_icon_clean.png"
                         alt="Family"
                         fill
                         className="object-contain object-top"
