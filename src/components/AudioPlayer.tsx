@@ -12,7 +12,7 @@ export function AudioPlayer() {
 
     useEffect(() => {
         // Randomize BGM
-        const songs = ["/bgm.mp3", "/song2.mp3", "/song3.mp3", "/song4.mp3", "/song5.mp3"];
+        const songs = ["/dude_bgm.mp3", "/jashn_e_bahara_bgm.mp3", "/varsham_bgm.mp3", "/kalyanam_bgm.mp3", "/seetha_kalyanam_bgm.mp3"];
         setAudioSrc(songs[Math.floor(Math.random() * songs.length)]);
     }, []);
 
