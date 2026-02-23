@@ -65,7 +65,9 @@ export function RsvpForm() {
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-6xl font-serif text-meenaya-cream mb-6 tracking-wide">RSVP</h2>
                     <div className="w-24 h-[1px] bg-meenaya-gold mx-auto mb-6" />
-                    <p className="font-sans text-meenaya-cream/80 text-lg tracking-wider">Kindly let us know if you can make it by April 1st, 2026.</p>
+                    <p className="text-center text-[#696B36]/80 pb-6 text-sm font-sans mx-auto max-w-lg">
+                        We want you and friends and family all to be here! Your guest count and RSVP helps us plan better. We understand as things change this can be updated for better planning.
+                    </p>
                 </div>
 
                 <motion.div

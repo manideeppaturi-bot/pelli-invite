@@ -23,7 +23,7 @@ export function Hero() {
         let isMounted = true;
         if (isMounted) {
             // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
-            setLanterns(generateLanterns(10));
+            setLanterns(generateLanterns(30));
         }
         return () => { isMounted = false; };
     }, []);
@@ -115,13 +115,13 @@ export function Hero() {
                     transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
                     className="text-center w-full px-4"
                 >
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none mix-blend-multiply">
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-[0_4px_16px_rgba(253,249,210,0.95)] relative z-10">
                         Manideep
                     </h1>
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase leading-none mix-blend-multiply py-2 md:py-4">
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase leading-none drop-shadow-[0_4px_16px_rgba(253,249,210,0.95)] py-2 md:py-4 relative z-10">
                         &
                     </h1>
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none mix-blend-multiply">
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-[0_4px_16px_rgba(253,249,210,0.95)] relative z-10">
                         Supriya
                     </h1>
                 </motion.div>

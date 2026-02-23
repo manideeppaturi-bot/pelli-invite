@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Upright, Manrope } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import { AudioPlayer } from "@/components/AudioPlayer";
+import { CursorTrail } from "@/components/CursorTrail";
 import "./globals.css";
 
 const cormorant = Cormorant_Upright({
@@ -41,6 +42,7 @@ export default function RootLayout({
       >
         <SmoothScroll>{children}</SmoothScroll>
         <AudioPlayer />
+        <CursorTrail />
       </body>
     </html>
   );

@@ -31,7 +31,7 @@ export function IntroVideo() {
                     className="mb-12 flex flex-col items-center"
                 >
                     <h2 className="text-4xl md:text-5xl font-serif text-[#CF2F2A] tracking-wider mb-4 drop-shadow-sm">
-                        A Journey Together
+                        Intros
                     </h2>
                     <div className="w-24 h-[1px] bg-[#E79300]" />
                 </motion.div>
