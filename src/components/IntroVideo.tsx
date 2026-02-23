@@ -9,6 +9,15 @@ export function IntroVideo() {
     const handlePlay = () => {
         // Broadcast custom event to tell the global AudioPlayer to pause
         window.dispatchEvent(new CustomEvent("video-playing"));
+        // Auto-fullscreen on mobile
+        const video = videoRef.current;
+        if (video && window.innerWidth <= 768) {
+            if (video.requestFullscreen) {
+                video.requestFullscreen().catch(() => { });
+            } else if ((video as unknown as { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen) {
+                (video as unknown as { webkitEnterFullscreen: () => void }).webkitEnterFullscreen();
+            }
+        }
     };
 
     const handlePause = () => {
