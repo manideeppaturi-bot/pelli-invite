@@ -113,15 +113,18 @@ export function Hero() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
-                    className="text-center w-full px-4"
+                    className="text-center w-full px-4 relative z-10 flex flex-col items-center justify-center"
                 >
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-[0_4px_16px_rgba(253,249,210,0.95)] relative z-10">
+                    {/* Organic Glow Behind Text for Perfect Legibility */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FDF9D2] via-[#FDF9D2]/70 to-transparent blur-2xl -z-10 scale-[1.5] w-full h-[140%]" />
+
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-md">
                         Manideep
                     </h1>
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase leading-none drop-shadow-[0_4px_16px_rgba(253,249,210,0.95)] py-2 md:py-4 relative z-10">
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase leading-none drop-shadow-md py-2 md:py-4">
                         &
                     </h1>
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-[0_4px_16px_rgba(253,249,210,0.95)] relative z-10">
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-md">
                         Supriya
                     </h1>
                 </motion.div>

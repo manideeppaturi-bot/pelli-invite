@@ -23,9 +23,9 @@ const events = [
         title: "HALDI",
         date: "SATURDAY, MAY 2ND 2026",
         time: "10:00 AM ONWARDS",
-        venue: "HERE",
-        address: "At our residence",
-        mapLink: "",
+        venue: "COVERED BRIDGE RETREAT",
+        address: "45 Covered Bridge Rd, Palmerton, PA 18071",
+        mapLink: "https://maps.google.com/?q=45+Covered+Bridge+Road,+Palmerton,+PA",
         description: "Join us for a morning of colors, joy, and blessings as we celebrate with the traditional Haldi.",
         icon: (
             <div className="relative w-32 h-32 md:w-40 md:h-40 mix-blend-multiply mb-4">

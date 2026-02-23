@@ -58,14 +58,17 @@ export function RsvpForm() {
     }
 
     return (
-        <section id="rsvp" className="w-full py-32 px-4 bg-meenaya-teal text-meenaya-cream relative">
+        <section id="rsvp" className="w-full py-32 px-4 bg-[#CF2F2A] text-[#FDF9D2] relative">
             <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/floral-motif.png')] pointer-events-none" />
+
+            {/* Saree Border Top Separator */}
+            <div className="absolute top-0 left-0 w-full h-4 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_15px,#FDF9D2_15px,#FDF9D2_30px)] shadow-md z-20 opacity-90" />
 
             <div className="max-w-3xl mx-auto relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-5xl md:text-6xl font-serif text-meenaya-cream mb-6 tracking-wide">RSVP</h2>
-                    <div className="w-24 h-[1px] bg-meenaya-gold mx-auto mb-6" />
-                    <p className="text-center text-[#696B36]/80 pb-6 text-sm font-sans mx-auto max-w-lg">
+                    <h2 className="text-5xl md:text-6xl font-serif text-[#FDF9D2] mb-6 tracking-wide drop-shadow-sm">RSVP</h2>
+                    <div className="w-24 h-[1px] bg-[#E79300] mx-auto mb-6" />
+                    <p className="text-center text-[#FDF9D2]/90 pb-6 text-sm font-sans mx-auto max-w-lg leading-relaxed">
                         We want you and friends and family all to be here! Your guest count and RSVP helps us plan better. We understand as things change this can be updated for better planning.
                     </p>
                 </div>
@@ -74,9 +77,18 @@ export function RsvpForm() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-[#FDF9D2] p-8 md:p-14 rounded-t-[100px] shadow-2xl border border-meenaya-gold/30 relative overflow-hidden"
+                    className="bg-[#FDF9D2] p-8 md:p-14 rounded-t-[100px] shadow-2xl border-4 border-[#E79300] relative overflow-hidden"
                 >
-                    <div className="absolute inset-2 border-[1px] border-meenaya-gold/40 rounded-t-[90px] pointer-events-none" />
+                    {/* Telugu Mango Leaves (Toranam) Decor at Top of Card */}
+                    <div className="w-full flex justify-between absolute top-0 left-0 right-0 px-8 py-2 opacity-90 z-20 pointer-events-none">
+                        {[...Array(6)].map((_, i) => (
+                            <svg key={i} width="30" height="50" viewBox="0 0 40 60" fill="none" className="drop-shadow-sm">
+                                <path d="M20 0C20 0 40 15 40 30C40 45 20 60 20 60C20 60 0 45 0 30C0 15 20 0 20 0Z" fill="#45A086" />
+                            </svg>
+                        ))}
+                    </div>
+
+                    <div className="absolute inset-2 border-[1px] border-[#E79300]/40 rounded-t-[90px] pointer-events-none" />
 
                     <form onSubmit={handleSubmit} className="space-y-8 mt-6 relative z-10">
                         <div className="space-y-6">
