@@ -8,13 +8,14 @@ export function AudioPlayer() {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [hasEntered, setHasEntered] = useState(false);
-    const [audioSrc, setAudioSrc] = useState("/bgm.mp3");
-
-    useEffect(() => {
+    const [audioSrc] = useState<string>(() => {
         // Randomize BGM
-        const songs = ["/dude_bgm.mp3", "/jashn_e_bahara_bgm.mp3", "/varsham_bgm.mp3", "/kalyanam_bgm.mp3", "/seetha_kalyanam_bgm.mp3"];
-        setAudioSrc(songs[Math.floor(Math.random() * songs.length)]);
-    }, []);
+        if (typeof window !== 'undefined') {
+            const songs = ["/dude_bgm.mp3", "/jashn_e_bahara_bgm.mp3", "/varsham_bgm.mp3", "/kalyanam_bgm.mp3", "/seetha_kalyanam_bgm.mp3"];
+            return songs[Math.floor(Math.random() * songs.length)];
+        }
+        return "";
+    });
 
     useEffect(() => {
         const audio = audioRef.current;

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { FloatingParticles } from "./FloatingParticles";
 
@@ -56,7 +56,20 @@ const events = [
     }
 ];
 
-function EventCard({ event, index }: { event: any, index: number }) {
+export interface EventItem {
+    title: string;
+    date: string;
+    time: string;
+    venue: string;
+    address: string;
+    mapLink: string;
+    description: string;
+    dressCode: string;
+    venueDetails: string;
+    icon: React.ReactNode;
+}
+
+function EventCard({ event, index }: { event: EventItem, index: number }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<"dress" | "venue" | null>(null);
 

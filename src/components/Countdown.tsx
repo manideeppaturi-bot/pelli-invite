@@ -49,7 +49,7 @@ export function Countdown({ targetDate }: CountdownProps) {
     useEffect(() => {
         let isMounted = true;
         if (isMounted) {
-            // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setMounted(true);
         }
         return () => { isMounted = false; };

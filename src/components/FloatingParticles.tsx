@@ -45,7 +45,7 @@ export function FloatingParticles({ count = 10 }: FloatingParticlesProps) {
                     type: ["orange_lantern", "flower", "orb"][Math.floor(Math.random() * 3)],
                 };
             });
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setLanterns(generated);
         }
         return () => { isMounted = false; };
