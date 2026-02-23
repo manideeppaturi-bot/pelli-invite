@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { FloatingParticles } from "./FloatingParticles";
 
@@ -9,13 +9,20 @@ export function Story() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start end", "end start"], // Begins when top of element hits bottom of viewport
+        offset: ["start end", "end start"],
     });
 
-    // Slower, subtle parallax movements for premium feel without spring jitter under Lenis
-    const textY = useTransform(scrollYProgress, [0, 1], ["10%", "-10%"]);
-    // Deep Parallax specifically for the Story image
-    const imageY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+    const [isMobile, setIsMobile] = useState(true);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 768);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
+
+    // Disable parallax on mobile to prevent jerkiness
+    const textY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["10%", "-10%"]);
+    const imageY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["-20%", "20%"]);
 
     return (
         <section ref={containerRef} className="w-full py-32 px-4 bg-[#FDF9D2] text-[#696B36] relative overflow-hidden">

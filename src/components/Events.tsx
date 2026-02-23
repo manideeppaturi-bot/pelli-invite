@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { FloatingParticles } from "./FloatingParticles";
 
@@ -241,10 +241,17 @@ export function Events() {
         offset: ["start end", "end start"],
     });
 
-    // Parallax the entire grid container slightly upwards
-    const gridY = useTransform(scrollYProgress, [0, 1], ["10%", "-5%"]);
-    // Background texture moves at a different speed
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 768);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
+
+    // Disable parallax on mobile to prevent jerkiness
+    const gridY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["10%", "-5%"]);
+    const bgY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "50%"]);
 
     return (
         <section ref={containerRef} className="w-full py-40 px-4 bg-[#E6D3FF] relative overflow-hidden">
