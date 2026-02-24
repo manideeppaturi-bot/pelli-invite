@@ -128,7 +128,7 @@ export function Story() {
                             >
                                 <div className="relative w-full h-full">
                                     <Image
-                                        src="/couple-photo.png"
+                                        src="/couple-photo-bg.png"
                                         alt="European Street Background"
                                         fill
                                         className="object-cover drop-shadow-md"
@@ -144,7 +144,7 @@ export function Story() {
                             >
                                 <div className="relative w-full h-full">
                                     <Image
-                                        src="/couple-photo-fg.png"
+                                        src="/couple-photo-fg-clean.png"
                                         alt="Manideep and Supriya"
                                         fill
                                         className="object-cover drop-shadow-2xl"
