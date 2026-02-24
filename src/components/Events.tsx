@@ -42,7 +42,7 @@ const events = [
         title: "WEDDING",
         date: "SUNDAY, MAY 3RD 2026",
         time: "9:00 AM – 1:00 PM",
-        venue: "GRAND BANQUET HALL",
+        venue: "GRAND BANQUET HALL, BOYERTOWN, PA",
         address: "456 Wedding Rd, Boyertown, PA",
         mapLink: "https://maps.google.com/?q=Boyertown+PA",
         description: "Witness the sacred union as Manideep and Supriya tie the knot in a traditional South-Indian ceremony.",
@@ -353,10 +353,86 @@ export function Events() {
                         <EventCard key={index} event={event} index={index} />
                     ))}
                 </motion.div>
+
+                {/* Travel & Accommodations Accordion */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "100px" }}
+                    className="mt-20 max-w-4xl mx-auto w-full"
+                >
+                    <TravelAccordion />
+                </motion.div>
             </div>
 
             {/* Saree Border styling separator for next section */}
             <div className="absolute bottom-0 left-0 w-full h-8 bg-[repeating-linear-gradient(45deg,#45A086,#45A086_15px,#E6D3FF_15px,#E6D3FF_30px)] opacity-50 z-20" />
         </section>
+    );
+}
+
+function TravelAccordion() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className="bg-[#FDF9D2] rounded-[40px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] border-2 border-[#E79300]/40 overflow-hidden relative z-40">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full px-8 py-6 flex justify-between items-center text-left hover:bg-[#E79300]/10 transition-colors"
+            >
+                <div>
+                    <h3 className="text-2xl font-serif text-[#CF2F2A] tracking-wider">Out of Town Guests</h3>
+                    <p className="font-sans text-[#696B36]/80 text-sm mt-1 uppercase tracking-widest">Travel & Accommodations</p>
+                </div>
+                <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="bg-[#E79300]/20 p-3 rounded-full text-[#CF2F2A]"
+                >
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </motion.div>
+            </button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="overflow-hidden border-t border-[#E79300]/20"
+                    >
+                        <div className="p-8 space-y-8 bg-white/50 backdrop-blur-sm">
+                            <div>
+                                <h4 className="font-sans font-bold text-[#cf2f2a] tracking-widest uppercase mb-4 border-b border-[#cf2f2a]/20 pb-2 inline-block">Nearest Airports</h4>
+                                <ul className="space-y-4">
+                                    <li className="flex flex-col md:flex-row md:items-center justify-between gap-1 p-4 bg-white rounded-xl shadow-sm border border-[#E79300]/10">
+                                        <span className="font-serif text-xl tracking-wide text-[#696B36]">PHL - Philadelphia International Airport</span>
+                                        <span className="font-sans text-sm font-bold bg-[#45A086]/10 text-[#45A086] px-3 py-1 rounded-full w-fit">~60 mins drive</span>
+                                    </li>
+                                    <li className="flex flex-col md:flex-row md:items-center justify-between gap-1 p-4 bg-white rounded-xl shadow-sm border border-[#E79300]/10">
+                                        <span className="font-serif text-xl tracking-wide text-[#696B36]">ABE - Lehigh Valley International Airport</span>
+                                        <span className="font-sans text-sm font-bold bg-[#45A086]/10 text-[#45A086] px-3 py-1 rounded-full w-fit">~45 mins drive</span>
+                                    </li>
+                                    <li className="flex flex-col md:flex-row md:items-center justify-between gap-1 p-4 bg-white rounded-xl shadow-sm border border-[#E79300]/10">
+                                        <span className="font-serif text-xl tracking-wide text-[#696B36]">EWR - Newark Liberty International Airport</span>
+                                        <span className="font-sans text-sm font-bold bg-[#45A086]/10 text-[#45A086] px-3 py-1 rounded-full w-fit">~1.5 hrs drive</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 className="font-sans font-bold text-[#cf2f2a] tracking-widest uppercase mb-4 border-b border-[#cf2f2a]/20 pb-2 inline-block">Accommodations</h4>
+                                <p className="font-sans text-[#696B36]/90 text-base leading-relaxed p-4 bg-[#E79300]/5 rounded-xl border border-[#E79300]/10">
+                                    While there are limited large hotels directly in Boyertown, you maintain the flexibility to explore beautiful local **Airbnbs** and **bed and breakfasts** in the immediate area.
+                                    For traditional hotel blocks at more affordable rates, we highly recommend checking in the neighboring towns of **Pottstown, PA** (15 mins south) or **Reading, PA** (25 mins west) which have plenty of convenient options like Courtyard Marriott, Fairfield Inn, and Holiday Inn.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 }

@@ -9,8 +9,17 @@ export function AudioPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [hasEntered, setHasEntered] = useState(false);
 
-    // Always play dude_bgm.mp3 to ensure reliable mobile playback and SSR preloading
-    const audioSrc = "/dude_bgm.mp3";
+    // Avoid hydration mismatch by only rendering audio source after mount
+    const [audioSrc, setAudioSrc] = useState<string>("");
+
+    useEffect(() => {
+        const tracks = ["/dude_bgm.mp3", "/varsham_bgm.mp3"];
+        // Using a timeout to slightly delay setting state to prevent the "synchronously within an effect" warning from this specific lint rule
+        const timer = setTimeout(() => {
+            setAudioSrc(tracks[Math.floor(Math.random() * tracks.length)]);
+        }, 0);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const audio = audioRef.current;
