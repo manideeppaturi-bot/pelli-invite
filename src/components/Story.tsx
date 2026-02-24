@@ -31,10 +31,12 @@ export function Story() {
             <div className="absolute top-0 left-0 w-full h-6 bg-[repeating-linear-gradient(90deg,#E79300,#E79300_10px,#CF2F2A_10px,#CF2F2A_20px)] shadow-md z-20 opacity-90" />
             <div className="absolute top-6 left-0 w-full h-2 bg-gradient-to-r from-[#CF2F2A] via-[#E79300] to-[#CF2F2A] z-20" />
 
-            {/* Peeking Couple (Left edge - Continuous Hide & Peek) */}
+            {/* Peeking Couple (Left edge - Slide in and stay) */}
             <motion.div
-                animate={{ x: ["-60%", "0%", "0%", "-60%"] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", times: [0, 0.3, 0.7, 1] }}
+                initial={{ x: "-60%", opacity: 0 }}
+                whileInView={{ x: "0%", opacity: 1 }}
+                viewport={{ once: true, margin: "200px" }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
                 className="absolute top-1/4 left-0 z-30 pointer-events-none w-[120px] sm:w-[160px] md:w-[250px] lg:w-[300px] h-[30%] sm:h-[35%] md:h-[50%]"
             >
                 <motion.div
