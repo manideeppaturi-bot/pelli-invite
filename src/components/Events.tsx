@@ -26,12 +26,25 @@ const events = [
         title: "HALDI",
         date: "SATURDAY, MAY 2ND 2026",
         time: "10:00 AM ONWARDS",
-        venue: "COVERED BRIDGE RETREAT",
+        venue: "COVERED BRIDGE RETREAT, PALMERTON, PA",
         address: "45 Covered Bridge Rd, Palmerton, PA 18071",
         mapLink: "https://maps.google.com/?q=45+Covered+Bridge+Road,+Palmerton,+PA",
         description: "Join us for a morning of colors, joy, and blessings as we celebrate with the traditional Haldi.",
         dressCode: "Yellow or bright traditional Indian attire",
-        venueDetails: "Covered Bridge Retreat features a beautiful outdoor space. Parking will be available on-site.",
+        venueDetails: (
+            <>
+                Covered Bridge Retreat features a beautiful outdoor space. Parking will be available on-site.
+                <br /><br />
+                <a
+                    href="https://www.airbnb.com/rooms/774004288686392665?adults=6&children=1&infants=1&search_mode=regular_search&photo_id=2077743232&source_impression_id=p3_1771522406_P3g4lE9nOjp0IHeN&previous_page_section_name=1000&federated_search_id=76914ec4-5840-432f-bb8e-f35690f175ad&guests=1&check_in=2026-04-27&check_out=2026-05-09"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold tracking-wider text-[#cf2f2a] underline hover:text-[#e79300] transition-colors"
+                >
+                    View Venue on Airbnb
+                </a>
+            </>
+        ),
         icon: (
             <div className="relative w-32 h-32 md:w-40 md:h-40 mix-blend-multiply mb-4">
                 <Image src="/haldi.png" alt="Haldi" fill className="object-contain" />
@@ -65,7 +78,7 @@ export interface EventItem {
     mapLink: string;
     description: string;
     dressCode: string;
-    venueDetails: string;
+    venueDetails: React.ReactNode;
     icon: React.ReactNode;
 }
 
@@ -205,9 +218,9 @@ function EventCard({ event, index }: { event: EventItem, index: number }) {
                                                     className="overflow-hidden"
                                                 >
                                                     <div className="px-4 pb-4 pt-1 flex flex-col gap-3">
-                                                        <p className="font-sans text-sm text-[#696B36] leading-relaxed">
+                                                        <div className="font-sans text-sm text-[#696B36] leading-relaxed">
                                                             {event.venueDetails}
-                                                        </p>
+                                                        </div>
                                                         {event.mapLink && (
                                                             <a
                                                                 href={event.mapLink}
