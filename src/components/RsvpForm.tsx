@@ -5,6 +5,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { FloatingParticles } from "./FloatingParticles";
 
+interface RsvpRecord {
+    id: string;
+    name: string;
+    guests_count: number;
+    attending_haldi: boolean;
+    attending_wedding: boolean;
+    attending_reception: boolean;
+}
+
 export function RsvpForm() {
     const [formData, setFormData] = useState({
         name: "",
@@ -19,19 +28,26 @@ export function RsvpForm() {
     const [totalGuests, setTotalGuests] = useState(15);
     const [sessionId, setSessionId] = useState<string | null>(null);
     const [welcomeName, setWelcomeName] = useState("");
+    const [allGuests, setAllGuests] = useState<RsvpRecord[]>([]);
 
     // Load total guests and local session on mount
     useEffect(() => {
         const fetchGuests = async () => {
-            const { data, error } = await supabase.from("rsvps").select("guests_count");
+            const { data, error } = await supabase.from("rsvps").select("*").order("created_at", { ascending: false });
             if (data && !error) {
+                setAllGuests(data);
                 const count = data.reduce((sum, row) => sum + (row.guests_count || 0), 0);
                 setTotalGuests(15 + count);
             }
         };
         fetchGuests();
 
-        const sessionRaw = localStorage.getItem("rsvpSession");
+        let sessionRaw = null;
+        try {
+            sessionRaw = localStorage.getItem("rsvpSession");
+        } catch (e) {
+            console.warn("localStorage not accessible", e);
+        }
         if (sessionRaw) {
             try {
                 const session = JSON.parse(sessionRaw);
@@ -120,20 +136,34 @@ export function RsvpForm() {
                 }
             }
 
-            // Save session
-            localStorage.setItem("rsvpSession", JSON.stringify({ ...formData, id: newId }));
+            // Save session securely
+            try {
+                localStorage.setItem("rsvpSession", JSON.stringify({ ...formData, id: newId }));
+            } catch (e) {
+                console.warn("Could not save session to localStorage", e);
+            }
+
             setWelcomeName(formData.name.split(" ")[0]);
+
+            // Fetch updated guest list
+            const { data: updatedGuests } = await supabase.from("rsvps").select("*").order("created_at", { ascending: false });
+            if (updatedGuests) {
+                setAllGuests(updatedGuests);
+                const count = updatedGuests.reduce((sum, row) => sum + (row.guests_count || 0), 0);
+                setTotalGuests(15 + count);
+            } else {
+                if (guestsDelta > 0) {
+                    setTotalGuests((prev) => prev + guestsDelta);
+                } else if (guestsDelta < 0) {
+                    setTotalGuests((prev) => prev + guestsDelta);
+                }
+            }
 
             if (guestsDelta > 0) {
                 playDing();
-                setTotalGuests((prev) => prev + guestsDelta);
-            } else if (guestsDelta < 0) {
-                setTotalGuests((prev) => prev + guestsDelta);
             }
 
             setStatus("success");
-            // Auto hide success block to show edit state after a bit
-            setTimeout(() => setStatus("idle"), 3000);
         } catch (error) {
             console.error("Error submitting RSVP:", error);
             setStatus("error");
@@ -142,7 +172,7 @@ export function RsvpForm() {
 
     if (status === "success") {
         return (
-            <div className="w-full py-24 px-4 bg-[#FDF9D2]">
+            <div className="w-full py-24 px-4 bg-[#FDF9D2] min-h-screen">
                 <div className="max-w-xl mx-auto bg-meenaya-purple/10 p-12 rounded-t-[100px] shadow-lg border border-meenaya-gold/20 text-center relative overflow-hidden">
                     <div className="absolute inset-2 border-[1px] border-meenaya-gold/40 rounded-t-[90px] pointer-events-none" />
                     <motion.h3
@@ -151,8 +181,43 @@ export function RsvpForm() {
                     >
                         Thank You!
                     </motion.h3>
-                    <p className="font-sans text-[#696B36]/90 text-lg">Your RSVP has been beautifully received. We can&apos;t wait to celebrate with you!</p>
+                    <p className="font-sans text-[#696B36]/90 text-lg mb-8">Your RSVP has been beautifully received. We can&apos;t wait to celebrate with you!</p>
+                    <button onClick={() => setStatus("idle")} className="bg-[#CF2F2A] hover:bg-[#8C1010] text-[#FDF9D2] font-sans font-bold tracking-widest uppercase text-sm px-8 py-3 rounded-full transition-all shadow-md">
+                        Back to Form
+                    </button>
                 </div>
+
+                {/* Guest List Below Success */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+                    className="mt-16 mx-auto max-w-4xl bg-white p-6 md:p-10 rounded-[40px] shadow-xl border border-[#E79300]/20"
+                >
+                    <h3 className="text-3xl font-serif text-[#CF2F2A] mb-8 text-center drop-shadow-sm">A Look at Who&apos;s Coming</h3>
+                    <div className="overflow-x-auto rounded-xl">
+                        <table className="w-full text-left border-collapse min-w-[600px]">
+                            <thead>
+                                <tr className="bg-[#E79300]/10 text-[#696B36] font-sans text-sm tracking-wider uppercase">
+                                    <th className="p-4 rounded-tl-xl font-bold border-b border-[#E79300]/20">Name</th>
+                                    <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Guests</th>
+                                    <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Cocktail Party</th>
+                                    <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Haldi</th>
+                                    <th className="p-4 text-center rounded-tr-xl font-bold border-b border-[#E79300]/20">Wedding</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {allGuests.map((guest, idx) => (
+                                    <tr key={guest.id} className={`border-b border-[#696B36]/10 font-serif text-lg ${idx % 2 === 0 ? 'bg-[#FDF9D2]/30' : ''} hover:bg-[#FDF9D2] transition-colors`}>
+                                        <td className="p-4 text-[#696B36] font-medium">{guest.name}</td>
+                                        <td className="p-4 text-center text-[#E79300] font-bold text-xl">{guest.guests_count}</td>
+                                        <td className="p-4 text-center text-2xl">{guest.attending_reception ? '🥂' : <span className="text-[#696B36]/20">—</span>}</td>
+                                        <td className="p-4 text-center text-2xl">{guest.attending_haldi ? '🌻' : <span className="text-[#696B36]/20">—</span>}</td>
+                                        <td className="p-4 text-center text-2xl">{guest.attending_wedding ? '✨' : <span className="text-[#696B36]/20">—</span>}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </motion.div>
             </div>
         );
     }
