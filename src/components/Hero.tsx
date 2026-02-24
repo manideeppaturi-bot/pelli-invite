@@ -95,13 +95,13 @@ export function Hero() {
                     {/* Organic Glow Behind Text for Perfect Legibility */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FDF9D2] via-[#FDF9D2]/70 to-transparent blur-2xl -z-10 scale-[1.5] w-full h-[140%]" />
 
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-md" style={{ textShadow: '0 2px 12px rgba(253,249,210,0.9), 0 0 30px rgba(253,249,210,0.7)' }}>
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-xl" style={{ textShadow: '2px 2px 0 #FDF9D2, -2px -2px 0 #FDF9D2, 2px -2px 0 #FDF9D2, -2px 2px 0 #FDF9D2, 0 4px 15px rgba(231,147,0,0.5)' }}>
                         Manideep
                     </h1>
-                    <h1 className="text-4xl md:text-7xl lg:text-[6rem] font-serif text-[#E79300] italic leading-none drop-shadow-md py-3 md:py-5" style={{ textShadow: '0 2px 12px rgba(253,249,210,0.9), 0 0 30px rgba(253,249,210,0.7)' }}>
+                    <h1 className="text-4xl md:text-7xl lg:text-[6rem] font-serif text-[#E79300] italic leading-none drop-shadow-xl py-3 md:py-5" style={{ textShadow: '2px 2px 0 #FDF9D2, -2px -2px 0 #FDF9D2, 2px -2px 0 #FDF9D2, -2px 2px 0 #FDF9D2, 0 4px 15px rgba(207,47,42,0.3)' }}>
                         &
                     </h1>
-                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-md" style={{ textShadow: '0 2px 12px rgba(253,249,210,0.9), 0 0 30px rgba(253,249,210,0.7)' }}>
+                    <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-serif text-[#CF2F2A] uppercase tracking-wider leading-none drop-shadow-xl" style={{ textShadow: '2px 2px 0 #FDF9D2, -2px -2px 0 #FDF9D2, 2px -2px 0 #FDF9D2, -2px 2px 0 #FDF9D2, 0 4px 15px rgba(231,147,0,0.5)' }}>
                         Supriya
                     </h1>
                 </motion.div>

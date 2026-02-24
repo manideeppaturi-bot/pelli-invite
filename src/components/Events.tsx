@@ -265,13 +265,13 @@ export function Events() {
     return (
         <section ref={containerRef} className="w-full py-40 px-4 bg-[#E6D3FF] relative overflow-hidden">
 
-            {/* Peeking Groom's Family (Top-Left - Drop Animation) */}
+            {/* Peeking Groom's Family (Left Side - Slide Animation) */}
             <motion.div
-                initial={{ y: -120, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
+                initial={{ x: -100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true, margin: "200px" }}
                 transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
-                className="absolute top-0 left-0 z-30 pointer-events-none w-[160px] sm:w-[240px] md:w-[340px] h-[18%] sm:h-[22%] md:h-[28%] -translate-x-[15%] md:-translate-x-[5%]"
+                className="absolute top-0 left-0 z-30 pointer-events-none w-[160px] sm:w-[240px] md:w-[340px] h-[18%] sm:h-[22%] md:h-[28%] -translate-x-[5%] md:-translate-x-[2%]"
             >
                 <motion.div
                     animate={{ y: [0, 12, 0] }}
@@ -288,13 +288,13 @@ export function Events() {
                 </motion.div>
             </motion.div>
 
-            {/* Peeking Bride's Family (Top-Right - Drop Animation) */}
+            {/* Peeking Bride's Family (Right Side - Slide Animation) */}
             <motion.div
-                initial={{ y: -120, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
+                initial={{ x: 100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true, margin: "200px" }}
                 transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-                className="absolute top-0 right-0 z-30 pointer-events-none w-[160px] sm:w-[240px] md:w-[340px] h-[18%] sm:h-[22%] md:h-[28%] translate-x-[15%] md:translate-x-[5%]"
+                className="absolute top-0 right-0 z-30 pointer-events-none w-[160px] sm:w-[240px] md:w-[340px] h-[18%] sm:h-[22%] md:h-[28%] translate-x-[5%] md:translate-x-[2%]"
             >
                 <motion.div
                     animate={{ y: [0, 12, 0] }}
@@ -327,7 +327,7 @@ export function Events() {
                 <div className="w-[500px] h-[500px] border-[1px] border-dashed border-[#CF2F2A]/20 rounded-full" />
             </motion.div>
 
-            <div className="max-w-7xl mx-auto relative z-10 pt-44 sm:pt-52 md:pt-56">
+            <div className="max-w-7xl mx-auto relative z-10 pt-24 sm:pt-32 md:pt-40">
                 <div className="text-center mb-16 md:mb-24 relative z-40 bg-white/40 backdrop-blur-sm rounded-3xl py-4 mx-4 md:bg-transparent md:backdrop-blur-none md:py-0 md:mx-0 shadow-sm md:shadow-none border border-white/50 md:border-none inline-block px-12 md:px-0 md:block">
                     <motion.h2
                         initial={{ opacity: 0, scale: 0.9 }}
