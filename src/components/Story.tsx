@@ -22,7 +22,11 @@ export function Story() {
 
     // Disable parallax on mobile to prevent jerkiness
     const textY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["10%", "-10%"]);
-    const imageY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["-20%", "20%"]);
+
+    // Background layer moves slower
+    const bgY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["-10%", "10%"]);
+    // Foreground layer moves faster to create popping 3D depth
+    const fgY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["10%", "-15%"]);
 
     return (
         <section ref={containerRef} className="w-full py-32 px-4 bg-[#FDF9D2] text-[#696B36] relative overflow-hidden">
@@ -117,24 +121,37 @@ export function Story() {
                             className="relative w-full max-w-[400px] aspect-[3/4] rounded-t-full border-[8px] border-[#45A086] overflow-hidden shadow-2xl bg-[#E6D3FF]/20 group z-10"
                             style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
                         >
+                            {/* Layer 1: Background Street (Slower Scroll) */}
                             <motion.div
-                                style={{ y: imageY }}
-                                className={`absolute inset-0 w-full ${isMobile ? 'h-full top-0' : 'h-[140%] -top-[20%]'}`}
+                                style={{ y: bgY }}
+                                className={`absolute inset-0 w-full ${isMobile ? 'h-full top-0' : 'h-[120%] -top-[10%]'}`}
                             >
-                                {/* Inner image container that moves with scroll */}
                                 <div className="relative w-full h-full">
                                     <Image
                                         src="/couple-photo.png"
-                                        alt="Manideep and Supriya"
+                                        alt="European Street Background"
                                         fill
-                                        className="object-cover grayscale-[20%] sepia-[10%] drop-shadow-md"
+                                        className="object-cover drop-shadow-md"
                                         priority
                                     />
                                 </div>
                             </motion.div>
 
-                            {/* Overlay gradient for premium feel */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#FDF9D2]/40 to-transparent pointer-events-none" />
+                            {/* Layer 2: Foreground Couple (Faster Scroll for 3D Pop Out) */}
+                            <motion.div
+                                style={{ y: fgY }}
+                                className={`absolute inset-0 w-full ${isMobile ? 'h-full top-0' : 'h-[130%] -top-[15%]'}`}
+                            >
+                                <div className="relative w-full h-full">
+                                    <Image
+                                        src="/couple-photo-fg.png"
+                                        alt="Manideep and Supriya"
+                                        fill
+                                        className="object-cover drop-shadow-2xl"
+                                        priority
+                                    />
+                                </div>
+                            </motion.div>
                         </div>
 
                         {/* Decorative Elements around the Arch */}
