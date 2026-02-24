@@ -186,38 +186,6 @@ export function RsvpForm() {
                         Back to Form
                     </button>
                 </div>
-
-                {/* Guest List Below Success */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                    className="mt-16 mx-auto max-w-4xl bg-white p-6 md:p-10 rounded-[40px] shadow-xl border border-[#E79300]/20"
-                >
-                    <h3 className="text-3xl font-serif text-[#CF2F2A] mb-8 text-center drop-shadow-sm">A Look at Who&apos;s Coming</h3>
-                    <div className="overflow-x-auto rounded-xl">
-                        <table className="w-full text-left border-collapse min-w-[600px]">
-                            <thead>
-                                <tr className="bg-[#E79300]/10 text-[#696B36] font-sans text-sm tracking-wider uppercase">
-                                    <th className="p-4 rounded-tl-xl font-bold border-b border-[#E79300]/20">Name</th>
-                                    <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Guests</th>
-                                    <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Cocktail Party</th>
-                                    <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Haldi</th>
-                                    <th className="p-4 text-center rounded-tr-xl font-bold border-b border-[#E79300]/20">Wedding</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {allGuests.map((guest, idx) => (
-                                    <tr key={guest.id} className={`border-b border-[#696B36]/10 font-serif text-lg ${idx % 2 === 0 ? 'bg-[#FDF9D2]/30' : ''} hover:bg-[#FDF9D2] transition-colors`}>
-                                        <td className="p-4 text-[#696B36] font-medium">{guest.name}</td>
-                                        <td className="p-4 text-center text-[#E79300] font-bold text-xl">{guest.guests_count}</td>
-                                        <td className="p-4 text-center text-2xl">{guest.attending_reception ? '🥂' : <span className="text-[#696B36]/20">—</span>}</td>
-                                        <td className="p-4 text-center text-2xl">{guest.attending_haldi ? '🌻' : <span className="text-[#696B36]/20">—</span>}</td>
-                                        <td className="p-4 text-center text-2xl">{guest.attending_wedding ? '✨' : <span className="text-[#696B36]/20">—</span>}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </motion.div>
             </div>
         );
     }
@@ -365,6 +333,42 @@ export function RsvpForm() {
                         </div>
                     </form>
                 </motion.div>
+
+                {/* Constant Guest List Display */}
+                {allGuests.length > 0 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mt-16 mx-auto max-w-4xl bg-[#FDF9D2] p-6 md:p-10 rounded-[40px] shadow-2xl border border-[#E79300]/20 relative z-10"
+                    >
+                        <h3 className="text-3xl font-serif text-[#CF2F2A] mb-8 text-center drop-shadow-sm">A Look at Who&apos;s Coming</h3>
+                        <div className="overflow-x-auto rounded-xl bg-white/50">
+                            <table className="w-full text-left border-collapse min-w-[600px]">
+                                <thead>
+                                    <tr className="bg-[#E79300]/10 text-[#696B36] font-sans text-sm tracking-wider uppercase">
+                                        <th className="p-4 rounded-tl-xl font-bold border-b border-[#E79300]/20">Name</th>
+                                        <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Guests</th>
+                                        <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Cocktail Party</th>
+                                        <th className="p-4 text-center font-bold border-b border-[#E79300]/20">Haldi</th>
+                                        <th className="p-4 text-center rounded-tr-xl font-bold border-b border-[#E79300]/20">Wedding</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {allGuests.map((guest, idx) => (
+                                        <tr key={guest.id} className={`border-b border-[#696B36]/10 font-serif text-lg ${idx % 2 === 0 ? 'bg-[#FDF9D2]/30' : ''} hover:bg-[#FDF9D2] transition-colors`}>
+                                            <td className="p-4 text-[#696B36] font-medium">{guest.name}</td>
+                                            <td className="p-4 text-center text-[#E79300] font-bold text-xl">{guest.guests_count}</td>
+                                            <td className="p-4 text-center text-2xl">{guest.attending_reception ? '🥂' : <span className="text-[#696B36]/20">—</span>}</td>
+                                            <td className="p-4 text-center text-2xl">{guest.attending_haldi ? '🌻' : <span className="text-[#696B36]/20">—</span>}</td>
+                                            <td className="p-4 text-center text-2xl">{guest.attending_wedding ? '✨' : <span className="text-[#696B36]/20">—</span>}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </motion.div>
+                )}
             </div>
         </section>
     );
